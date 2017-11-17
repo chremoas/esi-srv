@@ -9,14 +9,11 @@ It is generated from these files:
 
 It has these top-level messages:
 	EntityQueryRequest
-	AlliancesResponse
-	CharactersResponse
-	CorporationsResponse
-	EntitiesResponse
-	Alliance
-	Entity
-	Character
-	Corporation
+	EntitySearchRequest
+	AllianceResponse
+	EntityResponse
+	CharacterResponse
+	CorporationResponse
 */
 package chremoas_esi
 
@@ -67,6 +64,7 @@ func (EntityType) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []i
 
 type EntityQueryRequest struct {
 	EntityType EntityType `protobuf:"varint,1,opt,name=EntityType,json=entityType,enum=chremoas.esi.EntityType" json:"EntityType,omitempty"`
+	EntityId   int32      `protobuf:"varint,2,opt,name=EntityId,json=entityId" json:"EntityId,omitempty"`
 }
 
 func (m *EntityQueryRequest) Reset()                    { *m = EntityQueryRequest{} }
@@ -81,240 +79,340 @@ func (m *EntityQueryRequest) GetEntityType() EntityType {
 	return EntityType_ALLIANCE
 }
 
-type AlliancesResponse struct {
-	List []*Alliance `protobuf:"bytes,1,rep,name=List,json=list" json:"List,omitempty"`
-}
-
-func (m *AlliancesResponse) Reset()                    { *m = AlliancesResponse{} }
-func (m *AlliancesResponse) String() string            { return proto.CompactTextString(m) }
-func (*AlliancesResponse) ProtoMessage()               {}
-func (*AlliancesResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
-
-func (m *AlliancesResponse) GetList() []*Alliance {
+func (m *EntityQueryRequest) GetEntityId() int32 {
 	if m != nil {
-		return m.List
+		return m.EntityId
 	}
-	return nil
+	return 0
 }
 
-type CharactersResponse struct {
-	List []*Character `protobuf:"bytes,1,rep,name=List,json=list" json:"List,omitempty"`
+type EntitySearchRequest struct {
+	SearchString string `protobuf:"bytes,1,opt,name=SearchString,json=searchString" json:"SearchString,omitempty"`
 }
 
-func (m *CharactersResponse) Reset()                    { *m = CharactersResponse{} }
-func (m *CharactersResponse) String() string            { return proto.CompactTextString(m) }
-func (*CharactersResponse) ProtoMessage()               {}
-func (*CharactersResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+func (m *EntitySearchRequest) Reset()                    { *m = EntitySearchRequest{} }
+func (m *EntitySearchRequest) String() string            { return proto.CompactTextString(m) }
+func (*EntitySearchRequest) ProtoMessage()               {}
+func (*EntitySearchRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
-func (m *CharactersResponse) GetList() []*Character {
+func (m *EntitySearchRequest) GetSearchString() string {
 	if m != nil {
-		return m.List
+		return m.SearchString
 	}
-	return nil
+	return ""
 }
 
-type CorporationsResponse struct {
-	List []*Corporation `protobuf:"bytes,1,rep,name=List,json=list" json:"List,omitempty"`
+type AllianceResponse struct {
+	Id           int32  `protobuf:"varint,1,opt,name=Id,json=id" json:"Id,omitempty"`
+	Name         string `protobuf:"bytes,2,opt,name=Name,json=name" json:"Name,omitempty"`
+	Ticker       string `protobuf:"bytes,3,opt,name=Ticker,json=ticker" json:"Ticker,omitempty"`
+	ExecutorCorp int32  `protobuf:"varint,4,opt,name=ExecutorCorp,json=executorCorp" json:"ExecutorCorp,omitempty"`
+	DateFounded  int64  `protobuf:"varint,5,opt,name=DateFounded,json=dateFounded" json:"DateFounded,omitempty"`
 }
 
-func (m *CorporationsResponse) Reset()                    { *m = CorporationsResponse{} }
-func (m *CorporationsResponse) String() string            { return proto.CompactTextString(m) }
-func (*CorporationsResponse) ProtoMessage()               {}
-func (*CorporationsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+func (m *AllianceResponse) Reset()                    { *m = AllianceResponse{} }
+func (m *AllianceResponse) String() string            { return proto.CompactTextString(m) }
+func (*AllianceResponse) ProtoMessage()               {}
+func (*AllianceResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
 
-func (m *CorporationsResponse) GetList() []*Corporation {
-	if m != nil {
-		return m.List
-	}
-	return nil
-}
-
-type EntitiesResponse struct {
-	List []*Entity `protobuf:"bytes,1,rep,name=List,json=list" json:"List,omitempty"`
-}
-
-func (m *EntitiesResponse) Reset()                    { *m = EntitiesResponse{} }
-func (m *EntitiesResponse) String() string            { return proto.CompactTextString(m) }
-func (*EntitiesResponse) ProtoMessage()               {}
-func (*EntitiesResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
-
-func (m *EntitiesResponse) GetList() []*Entity {
-	if m != nil {
-		return m.List
-	}
-	return nil
-}
-
-type Alliance struct {
-	Id     int64  `protobuf:"varint,1,opt,name=Id,json=id" json:"Id,omitempty"`
-	Name   string `protobuf:"bytes,2,opt,name=Name,json=name" json:"Name,omitempty"`
-	Ticker string `protobuf:"bytes,3,opt,name=Ticker,json=ticker" json:"Ticker,omitempty"`
-}
-
-func (m *Alliance) Reset()                    { *m = Alliance{} }
-func (m *Alliance) String() string            { return proto.CompactTextString(m) }
-func (*Alliance) ProtoMessage()               {}
-func (*Alliance) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
-
-func (m *Alliance) GetId() int64 {
+func (m *AllianceResponse) GetId() int32 {
 	if m != nil {
 		return m.Id
 	}
 	return 0
 }
 
-func (m *Alliance) GetName() string {
+func (m *AllianceResponse) GetName() string {
 	if m != nil {
 		return m.Name
 	}
 	return ""
 }
 
-func (m *Alliance) GetTicker() string {
+func (m *AllianceResponse) GetTicker() string {
 	if m != nil {
 		return m.Ticker
 	}
 	return ""
 }
 
-type Entity struct {
-	Id            int64      `protobuf:"varint,1,opt,name=Id,json=id" json:"Id,omitempty"`
-	Name          string     `protobuf:"bytes,2,opt,name=Name,json=name" json:"Name,omitempty"`
-	Type          EntityType `protobuf:"varint,3,opt,name=Type,json=type,enum=chremoas.esi.EntityType" json:"Type,omitempty"`
-	Ticker        string     `protobuf:"bytes,4,opt,name=Ticker,json=ticker" json:"Ticker,omitempty"`
-	CorporationId int64      `protobuf:"varint,5,opt,name=CorporationId,json=corporationId" json:"CorporationId,omitempty"`
-	AllianceId    int64      `protobuf:"varint,6,opt,name=AllianceId,json=allianceId" json:"AllianceId,omitempty"`
+func (m *AllianceResponse) GetExecutorCorp() int32 {
+	if m != nil {
+		return m.ExecutorCorp
+	}
+	return 0
 }
 
-func (m *Entity) Reset()                    { *m = Entity{} }
-func (m *Entity) String() string            { return proto.CompactTextString(m) }
-func (*Entity) ProtoMessage()               {}
-func (*Entity) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
+func (m *AllianceResponse) GetDateFounded() int64 {
+	if m != nil {
+		return m.DateFounded
+	}
+	return 0
+}
 
-func (m *Entity) GetId() int64 {
+type EntityResponse struct {
+	Id          int32                `protobuf:"varint,1,opt,name=Id,json=id" json:"Id,omitempty"`
+	Type        EntityType           `protobuf:"varint,2,opt,name=Type,json=type,enum=chremoas.esi.EntityType" json:"Type,omitempty"`
+	Alliance    *AllianceResponse    `protobuf:"bytes,3,opt,name=Alliance,json=alliance" json:"Alliance,omitempty"`
+	Corporation *CorporationResponse `protobuf:"bytes,4,opt,name=Corporation,json=corporation" json:"Corporation,omitempty"`
+	Character   *CharacterResponse   `protobuf:"bytes,5,opt,name=Character,json=character" json:"Character,omitempty"`
+}
+
+func (m *EntityResponse) Reset()                    { *m = EntityResponse{} }
+func (m *EntityResponse) String() string            { return proto.CompactTextString(m) }
+func (*EntityResponse) ProtoMessage()               {}
+func (*EntityResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+
+func (m *EntityResponse) GetId() int32 {
 	if m != nil {
 		return m.Id
 	}
 	return 0
 }
 
-func (m *Entity) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-func (m *Entity) GetType() EntityType {
+func (m *EntityResponse) GetType() EntityType {
 	if m != nil {
 		return m.Type
 	}
 	return EntityType_ALLIANCE
 }
 
-func (m *Entity) GetTicker() string {
+func (m *EntityResponse) GetAlliance() *AllianceResponse {
 	if m != nil {
-		return m.Ticker
+		return m.Alliance
 	}
-	return ""
+	return nil
 }
 
-func (m *Entity) GetCorporationId() int64 {
+func (m *EntityResponse) GetCorporation() *CorporationResponse {
 	if m != nil {
-		return m.CorporationId
+		return m.Corporation
 	}
-	return 0
+	return nil
 }
 
-func (m *Entity) GetAllianceId() int64 {
+func (m *EntityResponse) GetCharacter() *CharacterResponse {
 	if m != nil {
-		return m.AllianceId
+		return m.Character
 	}
-	return 0
+	return nil
 }
 
-type Character struct {
-	Id            int64  `protobuf:"varint,1,opt,name=Id,json=id" json:"Id,omitempty"`
-	Name          string `protobuf:"bytes,2,opt,name=Name,json=name" json:"Name,omitempty"`
-	CorporationId int64  `protobuf:"varint,3,opt,name=CorporationId,json=corporationId" json:"CorporationId,omitempty"`
+type CharacterResponse struct {
+	Id             int32   `protobuf:"varint,1,opt,name=Id,json=id" json:"Id,omitempty"`
+	Name           string  `protobuf:"bytes,2,opt,name=Name,json=name" json:"Name,omitempty"`
+	Description    string  `protobuf:"bytes,3,opt,name=Description,json=description" json:"Description,omitempty"`
+	CorporationId  int32   `protobuf:"varint,4,opt,name=CorporationId,json=corporationId" json:"CorporationId,omitempty"`
+	AllianceId     int32   `protobuf:"varint,5,opt,name=AllianceId,json=allianceId" json:"AllianceId,omitempty"`
+	Birthday       int64   `protobuf:"varint,6,opt,name=Birthday,json=birthday" json:"Birthday,omitempty"`
+	Gender         string  `protobuf:"bytes,7,opt,name=Gender,json=gender" json:"Gender,omitempty"`
+	RaceId         int32   `protobuf:"varint,8,opt,name=RaceId,json=raceId" json:"RaceId,omitempty"`
+	BloodlineId    int32   `protobuf:"varint,9,opt,name=BloodlineId,json=bloodlineId" json:"BloodlineId,omitempty"`
+	AncestryId     int32   `protobuf:"varint,10,opt,name=AncestryId,json=ancestryId" json:"AncestryId,omitempty"`
+	SecurityStatus float32 `protobuf:"fixed32,11,opt,name=SecurityStatus,json=securityStatus" json:"SecurityStatus,omitempty"`
+	FactionId      int32   `protobuf:"varint,12,opt,name=FactionId,json=factionId" json:"FactionId,omitempty"`
 }
 
-func (m *Character) Reset()                    { *m = Character{} }
-func (m *Character) String() string            { return proto.CompactTextString(m) }
-func (*Character) ProtoMessage()               {}
-func (*Character) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
+func (m *CharacterResponse) Reset()                    { *m = CharacterResponse{} }
+func (m *CharacterResponse) String() string            { return proto.CompactTextString(m) }
+func (*CharacterResponse) ProtoMessage()               {}
+func (*CharacterResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
 
-func (m *Character) GetId() int64 {
-	if m != nil {
-		return m.Id
-	}
-	return 0
-}
-
-func (m *Character) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-func (m *Character) GetCorporationId() int64 {
-	if m != nil {
-		return m.CorporationId
-	}
-	return 0
-}
-
-type Corporation struct {
-	Id         int64  `protobuf:"varint,1,opt,name=Id,json=id" json:"Id,omitempty"`
-	Name       string `protobuf:"bytes,2,opt,name=Name,json=name" json:"Name,omitempty"`
-	Ticker     string `protobuf:"bytes,3,opt,name=Ticker,json=ticker" json:"Ticker,omitempty"`
-	AllianceId int64  `protobuf:"varint,4,opt,name=AllianceId,json=allianceId" json:"AllianceId,omitempty"`
-}
-
-func (m *Corporation) Reset()                    { *m = Corporation{} }
-func (m *Corporation) String() string            { return proto.CompactTextString(m) }
-func (*Corporation) ProtoMessage()               {}
-func (*Corporation) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
-
-func (m *Corporation) GetId() int64 {
+func (m *CharacterResponse) GetId() int32 {
 	if m != nil {
 		return m.Id
 	}
 	return 0
 }
 
-func (m *Corporation) GetName() string {
+func (m *CharacterResponse) GetName() string {
 	if m != nil {
 		return m.Name
 	}
 	return ""
 }
 
-func (m *Corporation) GetTicker() string {
+func (m *CharacterResponse) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+func (m *CharacterResponse) GetCorporationId() int32 {
+	if m != nil {
+		return m.CorporationId
+	}
+	return 0
+}
+
+func (m *CharacterResponse) GetAllianceId() int32 {
+	if m != nil {
+		return m.AllianceId
+	}
+	return 0
+}
+
+func (m *CharacterResponse) GetBirthday() int64 {
+	if m != nil {
+		return m.Birthday
+	}
+	return 0
+}
+
+func (m *CharacterResponse) GetGender() string {
+	if m != nil {
+		return m.Gender
+	}
+	return ""
+}
+
+func (m *CharacterResponse) GetRaceId() int32 {
+	if m != nil {
+		return m.RaceId
+	}
+	return 0
+}
+
+func (m *CharacterResponse) GetBloodlineId() int32 {
+	if m != nil {
+		return m.BloodlineId
+	}
+	return 0
+}
+
+func (m *CharacterResponse) GetAncestryId() int32 {
+	if m != nil {
+		return m.AncestryId
+	}
+	return 0
+}
+
+func (m *CharacterResponse) GetSecurityStatus() float32 {
+	if m != nil {
+		return m.SecurityStatus
+	}
+	return 0
+}
+
+func (m *CharacterResponse) GetFactionId() int32 {
+	if m != nil {
+		return m.FactionId
+	}
+	return 0
+}
+
+type CorporationResponse struct {
+	Id           int32   `protobuf:"varint,1,opt,name=Id,json=id" json:"Id,omitempty"`
+	Name         string  `protobuf:"bytes,2,opt,name=Name,json=name" json:"Name,omitempty"`
+	Ticker       string  `protobuf:"bytes,3,opt,name=Ticker,json=ticker" json:"Ticker,omitempty"`
+	MemberCount  int32   `protobuf:"varint,4,opt,name=MemberCount,json=memberCount" json:"MemberCount,omitempty"`
+	CeoId        int32   `protobuf:"varint,5,opt,name=CeoId,json=ceoId" json:"CeoId,omitempty"`
+	AllianceId   int32   `protobuf:"varint,6,opt,name=AllianceId,json=allianceId" json:"AllianceId,omitempty"`
+	Description  string  `protobuf:"bytes,7,opt,name=Description,json=description" json:"Description,omitempty"`
+	TaxRate      float32 `protobuf:"fixed32,8,opt,name=TaxRate,json=taxRate" json:"TaxRate,omitempty"`
+	CreationDate int64   `protobuf:"varint,9,opt,name=CreationDate,json=creationDate" json:"CreationDate,omitempty"`
+	CreatorId    int32   `protobuf:"varint,10,opt,name=CreatorId,json=creatorId" json:"CreatorId,omitempty"`
+	Url          string  `protobuf:"bytes,11,opt,name=Url,json=url" json:"Url,omitempty"`
+	Faction      string  `protobuf:"bytes,12,opt,name=Faction,json=faction" json:"Faction,omitempty"`
+}
+
+func (m *CorporationResponse) Reset()                    { *m = CorporationResponse{} }
+func (m *CorporationResponse) String() string            { return proto.CompactTextString(m) }
+func (*CorporationResponse) ProtoMessage()               {}
+func (*CorporationResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
+
+func (m *CorporationResponse) GetId() int32 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+func (m *CorporationResponse) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *CorporationResponse) GetTicker() string {
 	if m != nil {
 		return m.Ticker
 	}
 	return ""
 }
 
-func (m *Corporation) GetAllianceId() int64 {
+func (m *CorporationResponse) GetMemberCount() int32 {
+	if m != nil {
+		return m.MemberCount
+	}
+	return 0
+}
+
+func (m *CorporationResponse) GetCeoId() int32 {
+	if m != nil {
+		return m.CeoId
+	}
+	return 0
+}
+
+func (m *CorporationResponse) GetAllianceId() int32 {
 	if m != nil {
 		return m.AllianceId
 	}
 	return 0
+}
+
+func (m *CorporationResponse) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+func (m *CorporationResponse) GetTaxRate() float32 {
+	if m != nil {
+		return m.TaxRate
+	}
+	return 0
+}
+
+func (m *CorporationResponse) GetCreationDate() int64 {
+	if m != nil {
+		return m.CreationDate
+	}
+	return 0
+}
+
+func (m *CorporationResponse) GetCreatorId() int32 {
+	if m != nil {
+		return m.CreatorId
+	}
+	return 0
+}
+
+func (m *CorporationResponse) GetUrl() string {
+	if m != nil {
+		return m.Url
+	}
+	return ""
+}
+
+func (m *CorporationResponse) GetFaction() string {
+	if m != nil {
+		return m.Faction
+	}
+	return ""
 }
 
 func init() {
 	proto.RegisterType((*EntityQueryRequest)(nil), "chremoas.esi.EntityQueryRequest")
-	proto.RegisterType((*AlliancesResponse)(nil), "chremoas.esi.AlliancesResponse")
-	proto.RegisterType((*CharactersResponse)(nil), "chremoas.esi.CharactersResponse")
-	proto.RegisterType((*CorporationsResponse)(nil), "chremoas.esi.CorporationsResponse")
-	proto.RegisterType((*EntitiesResponse)(nil), "chremoas.esi.EntitiesResponse")
-	proto.RegisterType((*Alliance)(nil), "chremoas.esi.Alliance")
-	proto.RegisterType((*Entity)(nil), "chremoas.esi.Entity")
-	proto.RegisterType((*Character)(nil), "chremoas.esi.Character")
-	proto.RegisterType((*Corporation)(nil), "chremoas.esi.Corporation")
+	proto.RegisterType((*EntitySearchRequest)(nil), "chremoas.esi.EntitySearchRequest")
+	proto.RegisterType((*AllianceResponse)(nil), "chremoas.esi.AllianceResponse")
+	proto.RegisterType((*EntityResponse)(nil), "chremoas.esi.EntityResponse")
+	proto.RegisterType((*CharacterResponse)(nil), "chremoas.esi.CharacterResponse")
+	proto.RegisterType((*CorporationResponse)(nil), "chremoas.esi.CorporationResponse")
 	proto.RegisterEnum("chremoas.esi.EntityType", EntityType_name, EntityType_value)
 }
 
@@ -326,10 +424,10 @@ var _ server.Option
 // Client API for EntityQuery service
 
 type EntityQueryClient interface {
-	GetAlliances(ctx context.Context, in *EntityQueryRequest, opts ...client.CallOption) (*AlliancesResponse, error)
-	GetCorporations(ctx context.Context, in *EntityQueryRequest, opts ...client.CallOption) (*CorporationsResponse, error)
-	GetCharacters(ctx context.Context, in *EntityQueryRequest, opts ...client.CallOption) (*CharactersResponse, error)
-	GetEntities(ctx context.Context, in *EntityQueryRequest, opts ...client.CallOption) (*EntitiesResponse, error)
+	GetAlliance(ctx context.Context, in *EntityQueryRequest, opts ...client.CallOption) (*AllianceResponse, error)
+	GetCorporation(ctx context.Context, in *EntityQueryRequest, opts ...client.CallOption) (*CorporationResponse, error)
+	GetCharacter(ctx context.Context, in *EntityQueryRequest, opts ...client.CallOption) (*CharacterResponse, error)
+	GetEntity(ctx context.Context, in *EntitySearchRequest, opts ...client.CallOption) (*EntityResponse, error)
 }
 
 type entityQueryClient struct {
@@ -350,9 +448,9 @@ func NewEntityQueryClient(serviceName string, c client.Client) EntityQueryClient
 	}
 }
 
-func (c *entityQueryClient) GetAlliances(ctx context.Context, in *EntityQueryRequest, opts ...client.CallOption) (*AlliancesResponse, error) {
-	req := c.c.NewRequest(c.serviceName, "EntityQuery.GetAlliances", in)
-	out := new(AlliancesResponse)
+func (c *entityQueryClient) GetAlliance(ctx context.Context, in *EntityQueryRequest, opts ...client.CallOption) (*AllianceResponse, error) {
+	req := c.c.NewRequest(c.serviceName, "EntityQuery.GetAlliance", in)
+	out := new(AllianceResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -360,9 +458,9 @@ func (c *entityQueryClient) GetAlliances(ctx context.Context, in *EntityQueryReq
 	return out, nil
 }
 
-func (c *entityQueryClient) GetCorporations(ctx context.Context, in *EntityQueryRequest, opts ...client.CallOption) (*CorporationsResponse, error) {
-	req := c.c.NewRequest(c.serviceName, "EntityQuery.GetCorporations", in)
-	out := new(CorporationsResponse)
+func (c *entityQueryClient) GetCorporation(ctx context.Context, in *EntityQueryRequest, opts ...client.CallOption) (*CorporationResponse, error) {
+	req := c.c.NewRequest(c.serviceName, "EntityQuery.GetCorporation", in)
+	out := new(CorporationResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -370,9 +468,9 @@ func (c *entityQueryClient) GetCorporations(ctx context.Context, in *EntityQuery
 	return out, nil
 }
 
-func (c *entityQueryClient) GetCharacters(ctx context.Context, in *EntityQueryRequest, opts ...client.CallOption) (*CharactersResponse, error) {
-	req := c.c.NewRequest(c.serviceName, "EntityQuery.GetCharacters", in)
-	out := new(CharactersResponse)
+func (c *entityQueryClient) GetCharacter(ctx context.Context, in *EntityQueryRequest, opts ...client.CallOption) (*CharacterResponse, error) {
+	req := c.c.NewRequest(c.serviceName, "EntityQuery.GetCharacter", in)
+	out := new(CharacterResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -380,9 +478,9 @@ func (c *entityQueryClient) GetCharacters(ctx context.Context, in *EntityQueryRe
 	return out, nil
 }
 
-func (c *entityQueryClient) GetEntities(ctx context.Context, in *EntityQueryRequest, opts ...client.CallOption) (*EntitiesResponse, error) {
-	req := c.c.NewRequest(c.serviceName, "EntityQuery.GetEntities", in)
-	out := new(EntitiesResponse)
+func (c *entityQueryClient) GetEntity(ctx context.Context, in *EntitySearchRequest, opts ...client.CallOption) (*EntityResponse, error) {
+	req := c.c.NewRequest(c.serviceName, "EntityQuery.GetEntity", in)
+	out := new(EntityResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -393,10 +491,10 @@ func (c *entityQueryClient) GetEntities(ctx context.Context, in *EntityQueryRequ
 // Server API for EntityQuery service
 
 type EntityQueryHandler interface {
-	GetAlliances(context.Context, *EntityQueryRequest, *AlliancesResponse) error
-	GetCorporations(context.Context, *EntityQueryRequest, *CorporationsResponse) error
-	GetCharacters(context.Context, *EntityQueryRequest, *CharactersResponse) error
-	GetEntities(context.Context, *EntityQueryRequest, *EntitiesResponse) error
+	GetAlliance(context.Context, *EntityQueryRequest, *AllianceResponse) error
+	GetCorporation(context.Context, *EntityQueryRequest, *CorporationResponse) error
+	GetCharacter(context.Context, *EntityQueryRequest, *CharacterResponse) error
+	GetEntity(context.Context, *EntitySearchRequest, *EntityResponse) error
 }
 
 func RegisterEntityQueryHandler(s server.Server, hdlr EntityQueryHandler, opts ...server.HandlerOption) {
@@ -407,54 +505,71 @@ type EntityQuery struct {
 	EntityQueryHandler
 }
 
-func (h *EntityQuery) GetAlliances(ctx context.Context, in *EntityQueryRequest, out *AlliancesResponse) error {
-	return h.EntityQueryHandler.GetAlliances(ctx, in, out)
+func (h *EntityQuery) GetAlliance(ctx context.Context, in *EntityQueryRequest, out *AllianceResponse) error {
+	return h.EntityQueryHandler.GetAlliance(ctx, in, out)
 }
 
-func (h *EntityQuery) GetCorporations(ctx context.Context, in *EntityQueryRequest, out *CorporationsResponse) error {
-	return h.EntityQueryHandler.GetCorporations(ctx, in, out)
+func (h *EntityQuery) GetCorporation(ctx context.Context, in *EntityQueryRequest, out *CorporationResponse) error {
+	return h.EntityQueryHandler.GetCorporation(ctx, in, out)
 }
 
-func (h *EntityQuery) GetCharacters(ctx context.Context, in *EntityQueryRequest, out *CharactersResponse) error {
-	return h.EntityQueryHandler.GetCharacters(ctx, in, out)
+func (h *EntityQuery) GetCharacter(ctx context.Context, in *EntityQueryRequest, out *CharacterResponse) error {
+	return h.EntityQueryHandler.GetCharacter(ctx, in, out)
 }
 
-func (h *EntityQuery) GetEntities(ctx context.Context, in *EntityQueryRequest, out *EntitiesResponse) error {
-	return h.EntityQueryHandler.GetEntities(ctx, in, out)
+func (h *EntityQuery) GetEntity(ctx context.Context, in *EntitySearchRequest, out *EntityResponse) error {
+	return h.EntityQueryHandler.GetEntity(ctx, in, out)
 }
 
 func init() { proto.RegisterFile("esi-srv.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 477 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x94, 0xc1, 0x6e, 0xd3, 0x40,
-	0x10, 0x86, 0xeb, 0xd8, 0x58, 0xcd, 0x38, 0x6e, 0xc3, 0xa8, 0x2a, 0x86, 0x43, 0xb1, 0x2c, 0x0e,
-	0x51, 0xa1, 0x39, 0x84, 0x0b, 0x42, 0x48, 0xc8, 0xb2, 0x42, 0xb0, 0x14, 0x25, 0x74, 0x49, 0x0f,
-	0x1c, 0x8d, 0x33, 0x52, 0x57, 0x24, 0xb6, 0xd9, 0xdd, 0x22, 0xe5, 0xcd, 0x78, 0x23, 0x5e, 0x03,
-	0xe1, 0x26, 0xce, 0x3a, 0xb8, 0xc2, 0x12, 0xb7, 0x64, 0x3c, 0xf3, 0x8d, 0xff, 0x99, 0xf9, 0x0d,
-	0x2e, 0x49, 0x7e, 0x25, 0xc5, 0x8f, 0x61, 0x21, 0x72, 0x95, 0x63, 0x2f, 0xbd, 0x15, 0xb4, 0xce,
-	0x13, 0x39, 0x24, 0xc9, 0x83, 0x19, 0xe0, 0x38, 0x53, 0x5c, 0x6d, 0xae, 0xef, 0x48, 0x6c, 0x18,
-	0x7d, 0xbf, 0x23, 0xa9, 0xf0, 0x0d, 0xc0, 0x7d, 0x74, 0xb1, 0x29, 0xc8, 0x33, 0x7c, 0x63, 0x70,
-	0x32, 0xf2, 0x86, 0x7a, 0xe1, 0x70, 0xff, 0x9c, 0x01, 0x55, 0xbf, 0x83, 0xf7, 0xf0, 0x38, 0x5c,
-	0xad, 0x78, 0x92, 0xa5, 0x24, 0x19, 0xc9, 0x22, 0xcf, 0x24, 0xe1, 0x25, 0x58, 0x53, 0x2e, 0x95,
-	0x67, 0xf8, 0xe6, 0xc0, 0x19, 0x9d, 0xd7, 0x41, 0xbb, 0x74, 0x66, 0xad, 0xb8, 0x54, 0x41, 0x08,
-	0x18, 0xdd, 0x26, 0x22, 0x49, 0x15, 0x89, 0x3d, 0xe1, 0x65, 0x8d, 0xf0, 0xa4, 0x4e, 0xa8, 0xf2,
-	0xb7, 0x88, 0x31, 0x9c, 0x45, 0xb9, 0x28, 0x72, 0x91, 0x28, 0x9e, 0x67, 0x7b, 0xc8, 0x55, 0x0d,
-	0xf2, 0xf4, 0x00, 0xb2, 0xaf, 0xd8, 0x62, 0xde, 0x41, 0xbf, 0x14, 0xc9, 0x35, 0x25, 0x83, 0x1a,
-	0xe2, 0xac, 0x69, 0x24, 0xdb, 0xea, 0x0f, 0x70, 0xbc, 0x53, 0x86, 0x27, 0xd0, 0x89, 0x97, 0xe5,
-	0x18, 0x4d, 0xd6, 0xe1, 0x4b, 0x44, 0xb0, 0x66, 0xc9, 0x9a, 0xbc, 0x8e, 0x6f, 0x0c, 0xba, 0xcc,
-	0xca, 0x92, 0x35, 0xe1, 0x39, 0xd8, 0x0b, 0x9e, 0x7e, 0x23, 0xe1, 0x99, 0x65, 0xd4, 0x56, 0xe5,
-	0xbf, 0xe0, 0xa7, 0x01, 0xf6, 0x3d, 0xb8, 0x15, 0xe6, 0x15, 0x58, 0xe5, 0xce, 0xcc, 0x7f, 0xec,
-	0xcc, 0x52, 0x9b, 0x42, 0x6f, 0x6a, 0xe9, 0x4d, 0xf1, 0x05, 0xb8, 0xda, 0x3c, 0xe2, 0xa5, 0xf7,
-	0xa8, 0x6c, 0xea, 0xa6, 0x7a, 0x10, 0x2f, 0x00, 0x76, 0x12, 0xe3, 0xa5, 0x67, 0x97, 0x29, 0x90,
-	0x54, 0x91, 0xe0, 0x06, 0xba, 0xd5, 0x6a, 0x5a, 0xbd, 0xfc, 0x5f, 0x6d, 0xcd, 0x86, 0xb6, 0x01,
-	0x07, 0x47, 0xcb, 0xfa, 0x9f, 0xe1, 0x1e, 0x28, 0xb0, 0x0e, 0x15, 0x5c, 0xbe, 0xd5, 0x7d, 0x80,
-	0x3d, 0x38, 0x0e, 0xa7, 0xd3, 0x38, 0x9c, 0x45, 0xe3, 0xfe, 0x11, 0x9e, 0x82, 0x13, 0xcd, 0xd9,
-	0xa7, 0x39, 0x0b, 0x17, 0xf1, 0x7c, 0xd6, 0x37, 0xd0, 0x85, 0x6e, 0xf4, 0x31, 0x64, 0x61, 0xb4,
-	0x18, 0xb3, 0x7e, 0x67, 0xf4, 0xab, 0x03, 0x8e, 0x66, 0x2d, 0xfc, 0x0c, 0xbd, 0x09, 0xa9, 0xca,
-	0x1c, 0xe8, 0x37, 0xed, 0x46, 0x77, 0xe1, 0xb3, 0xe7, 0xcd, 0x46, 0xa9, 0xae, 0x31, 0x38, 0xc2,
-	0x2f, 0x70, 0x3a, 0x21, 0xa5, 0x5f, 0x7b, 0x0b, 0x6e, 0xf0, 0xe0, 0xe5, 0xeb, 0xe8, 0x1b, 0x70,
-	0xff, 0xa0, 0x2b, 0x2f, 0xb6, 0x00, 0xfb, 0x0f, 0xf8, 0x52, 0xc7, 0x5e, 0x83, 0x33, 0x21, 0xb5,
-	0x33, 0x56, 0x0b, 0xe8, 0x45, 0x43, 0x06, 0xd7, 0x87, 0xf0, 0xd5, 0x2e, 0x3f, 0x6c, 0xaf, 0x7f,
-	0x07, 0x00, 0x00, 0xff, 0xff, 0x54, 0x45, 0x4d, 0x8a, 0xe9, 0x04, 0x00, 0x00,
+	// 743 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x55, 0xcf, 0x6e, 0xf3, 0x44,
+	0x10, 0x4f, 0x9c, 0xbf, 0x1e, 0x3b, 0x21, 0x6c, 0x11, 0xb2, 0xaa, 0xaa, 0xa4, 0x16, 0x42, 0x11,
+	0x82, 0x1c, 0xc2, 0x05, 0x2a, 0x71, 0x48, 0x4d, 0x1a, 0x22, 0x95, 0x94, 0x6e, 0x82, 0x38, 0x6f,
+	0xd6, 0x43, 0x63, 0x48, 0xec, 0xb0, 0x5e, 0xa3, 0xe6, 0x25, 0x38, 0xf1, 0x66, 0xdc, 0x79, 0x09,
+	0x5e, 0xe0, 0xd3, 0xae, 0xed, 0xc4, 0x49, 0xf3, 0x29, 0x95, 0xbe, 0x9b, 0xe7, 0x37, 0xbb, 0xbf,
+	0x99, 0xf9, 0xcd, 0xce, 0x18, 0x5a, 0x18, 0x07, 0x5f, 0xc7, 0xe2, 0xaf, 0xfe, 0x46, 0x44, 0x32,
+	0x22, 0x36, 0x5f, 0x0a, 0x5c, 0x47, 0x2c, 0xee, 0x63, 0x1c, 0xb8, 0xbf, 0x03, 0x19, 0x85, 0x32,
+	0x90, 0xdb, 0xa7, 0x04, 0xc5, 0x96, 0xe2, 0x9f, 0x09, 0xc6, 0x92, 0x7c, 0x0b, 0x90, 0xa2, 0xf3,
+	0xed, 0x06, 0x9d, 0x72, 0xb7, 0xdc, 0x6b, 0x0f, 0x9c, 0x7e, 0xf1, 0x62, 0x7f, 0xef, 0xa7, 0x80,
+	0xbb, 0x6f, 0x72, 0x09, 0xcd, 0xd4, 0x33, 0xf1, 0x1d, 0xa3, 0x5b, 0xee, 0xd5, 0x68, 0x13, 0x33,
+	0xdb, 0xfd, 0x0e, 0x2e, 0x52, 0xdf, 0x0c, 0x99, 0xe0, 0xcb, 0x3c, 0x98, 0x0b, 0x76, 0x0a, 0xcc,
+	0xa4, 0x08, 0xc2, 0x67, 0x1d, 0xce, 0xa4, 0x76, 0x5c, 0xc0, 0xdc, 0x7f, 0xca, 0xd0, 0x19, 0xae,
+	0x56, 0x01, 0x0b, 0x39, 0x52, 0x8c, 0x37, 0x51, 0x18, 0x23, 0x69, 0x83, 0x31, 0xf1, 0xf5, 0xf1,
+	0x1a, 0x35, 0x02, 0x9f, 0x10, 0xa8, 0x4e, 0xd9, 0x1a, 0x75, 0x5c, 0x93, 0x56, 0x43, 0xb6, 0x46,
+	0xf2, 0x29, 0xd4, 0xe7, 0x01, 0xff, 0x03, 0x85, 0x53, 0xd1, 0x68, 0x5d, 0x6a, 0x4b, 0x05, 0x1d,
+	0xbd, 0x20, 0x4f, 0x64, 0x24, 0xbc, 0x48, 0x6c, 0x9c, 0xaa, 0x66, 0xb1, 0xb1, 0x80, 0x91, 0x2e,
+	0x58, 0x3f, 0x30, 0x89, 0xf7, 0x51, 0x12, 0xfa, 0xe8, 0x3b, 0xb5, 0x6e, 0xb9, 0x57, 0xa1, 0x96,
+	0xbf, 0x87, 0xdc, 0xbf, 0x0d, 0x68, 0xa7, 0x25, 0xbd, 0x37, 0xa9, 0xaf, 0xa0, 0xaa, 0x45, 0x34,
+	0xce, 0x88, 0x58, 0x95, 0x4a, 0xbe, 0x5b, 0x68, 0xe6, 0x65, 0xea, 0x84, 0xad, 0xc1, 0xf5, 0xe1,
+	0x8d, 0x63, 0x11, 0x68, 0x93, 0x65, 0x08, 0xf1, 0xc0, 0x52, 0x69, 0x47, 0x82, 0xc9, 0x20, 0x0a,
+	0x75, 0x45, 0xd6, 0xe0, 0xe6, 0xf0, 0x7a, 0xe1, 0xc0, 0x8e, 0xc1, 0xe2, 0x7b, 0x90, 0x7c, 0x0f,
+	0xa6, 0xb7, 0x64, 0x82, 0x71, 0x89, 0x42, 0x57, 0x6c, 0x0d, 0x3e, 0x3b, 0xa2, 0xc8, 0xdd, 0x3b,
+	0x02, 0x93, 0xe7, 0x90, 0xfb, 0xbf, 0x01, 0x1f, 0xbf, 0x3a, 0xf0, 0xa6, 0x46, 0x29, 0xb1, 0x31,
+	0xe6, 0x22, 0xd8, 0xe8, 0xec, 0xd3, 0x6e, 0x59, 0xfe, 0x1e, 0x22, 0x9f, 0x43, 0xab, 0x90, 0xfe,
+	0xc4, 0xcf, 0x7a, 0xd6, 0xe2, 0x45, 0x90, 0x5c, 0x03, 0xe4, 0x1a, 0x4d, 0xd2, 0x9e, 0xd5, 0x28,
+	0xb0, 0x1d, 0xa2, 0x1e, 0xe8, 0x5d, 0x20, 0xe4, 0xd2, 0x67, 0x5b, 0xa7, 0xae, 0x3b, 0xda, 0x5c,
+	0x64, 0xb6, 0x7a, 0x2c, 0x63, 0x0c, 0x7d, 0x14, 0x4e, 0x23, 0x7d, 0x2c, 0xcf, 0xda, 0x52, 0x38,
+	0x65, 0x9a, 0xaf, 0xa9, 0xf9, 0xea, 0x42, 0x5b, 0x2a, 0xe7, 0xbb, 0x55, 0x14, 0xf9, 0xab, 0x20,
+	0x54, 0x4e, 0x53, 0x3b, 0xad, 0xc5, 0x1e, 0xd2, 0xd9, 0x84, 0x1c, 0x63, 0x29, 0xd4, 0x40, 0x40,
+	0x96, 0xcd, 0x0e, 0x21, 0x5f, 0x40, 0x7b, 0x86, 0x3c, 0x11, 0x6a, 0x28, 0x24, 0x93, 0x49, 0xec,
+	0x58, 0xdd, 0x72, 0xcf, 0xa0, 0xed, 0xf8, 0x00, 0x25, 0x57, 0x60, 0xde, 0x33, 0x9e, 0xd5, 0x6d,
+	0x6b, 0x1a, 0xf3, 0xb7, 0x1c, 0x70, 0xff, 0x35, 0xe0, 0xe2, 0x44, 0x67, 0x3f, 0x68, 0x40, 0xba,
+	0x60, 0xfd, 0x84, 0xeb, 0x05, 0x0a, 0x2f, 0x4a, 0x42, 0x99, 0x69, 0x6d, 0xad, 0xf7, 0x10, 0xf9,
+	0x04, 0x6a, 0x1e, 0x46, 0x3b, 0x91, 0x6b, 0x5c, 0x19, 0x47, 0xfa, 0xd7, 0x5f, 0xe9, 0x7f, 0xd4,
+	0xe7, 0xc6, 0xeb, 0x3e, 0x3b, 0xd0, 0x98, 0xb3, 0x17, 0xca, 0x24, 0x6a, 0xb9, 0x0d, 0xda, 0x90,
+	0xa9, 0xa9, 0x86, 0xd6, 0x13, 0xa8, 0x6b, 0x54, 0x83, 0xa9, 0x05, 0xaf, 0x50, 0x9b, 0x17, 0x30,
+	0xa5, 0x94, 0x3e, 0x13, 0x89, 0x9d, 0xe0, 0x26, 0xcf, 0x01, 0xd2, 0x81, 0xca, 0x2f, 0x62, 0xa5,
+	0x45, 0x36, 0x69, 0x25, 0x11, 0x2b, 0x15, 0x2d, 0x53, 0x56, 0xeb, 0x6a, 0xd2, 0x46, 0xa6, 0xeb,
+	0x97, 0xb7, 0xc5, 0x25, 0x48, 0x6c, 0x68, 0x0e, 0x1f, 0x1e, 0x26, 0xc3, 0xa9, 0x37, 0xea, 0x94,
+	0xc8, 0x47, 0x60, 0x79, 0x8f, 0xf4, 0xe7, 0x47, 0x3a, 0x9c, 0x4f, 0x1e, 0xa7, 0x9d, 0x32, 0x69,
+	0x81, 0xe9, 0xfd, 0x38, 0xa4, 0x43, 0x6f, 0x3e, 0xa2, 0x1d, 0x63, 0xf0, 0x9f, 0x01, 0x56, 0x61,
+	0xaf, 0x92, 0x27, 0xb0, 0xc6, 0x28, 0x73, 0x61, 0x48, 0xf7, 0xd4, 0x1a, 0x28, 0x6e, 0xe0, 0xcb,
+	0x33, 0x63, 0xef, 0x96, 0xc8, 0xaf, 0xd0, 0x1e, 0xa3, 0x2c, 0xb4, 0xfd, 0x0d, 0xac, 0xe7, 0xb7,
+	0x81, 0x5b, 0x22, 0x33, 0xb0, 0x15, 0x71, 0x3e, 0xc5, 0x6f, 0xa0, 0x3d, 0xb7, 0x21, 0xdc, 0x12,
+	0x99, 0x82, 0x39, 0x46, 0x99, 0xde, 0x25, 0x37, 0xa7, 0x18, 0x0f, 0x7e, 0x0a, 0x97, 0x57, 0xa7,
+	0x8e, 0xec, 0xf9, 0x16, 0x75, 0xfd, 0x33, 0xfb, 0xe6, 0x5d, 0x00, 0x00, 0x00, 0xff, 0xff, 0x28,
+	0x10, 0x56, 0xc5, 0xdd, 0x06, 0x00, 0x00,
 }

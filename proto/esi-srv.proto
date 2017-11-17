@@ -9,60 +9,67 @@ enum EntityType {
 }
 
 service EntityQuery {
-    rpc GetAlliances (EntityQueryRequest) returns (AlliancesResponse) {
+    rpc GetAlliance (EntityQueryRequest) returns (AllianceResponse) {
     };
-    rpc GetCorporations (EntityQueryRequest) returns (CorporationsResponse) {
+    rpc GetCorporation (EntityQueryRequest) returns (CorporationResponse) {
     };
-    rpc GetCharacters (EntityQueryRequest) returns (CharactersResponse) {
+    rpc GetCharacter (EntityQueryRequest) returns (CharacterResponse) {
     };
-    rpc GetEntities (EntityQueryRequest) returns (EntitiesResponse) {
+    rpc GetEntity (EntitySearchRequest) returns (EntityResponse) {
     };
 }
 
 message EntityQueryRequest {
     EntityType EntityType = 1;
+    int32 EntityId = 2;
 }
 
-message AlliancesResponse {
-    repeated Alliance List = 1;
+message EntitySearchRequest {
+    string SearchString = 1;
 }
 
-message CharactersResponse {
-    repeated Character List = 1;
-}
-
-message CorporationsResponse {
-    repeated Corporation List = 1;
-}
-
-message EntitiesResponse {
-    repeated Entity List = 1;
-}
-
-message Alliance {
-    int64 Id = 1;
+message AllianceResponse {
+    int32 Id = 1;
     string Name = 2;
     string Ticker = 3;
+    int32 ExecutorCorp = 4;
+    int64 DateFounded = 5;
 }
 
-message Entity {
-    int64 Id = 1;
+message EntityResponse {
+    int32 Id = 1;
+    EntityType Type = 2;
+    AllianceResponse Alliance = 3;
+    CorporationResponse Corporation = 4;
+    CharacterResponse Character = 5;
+}
+
+message CharacterResponse {
+    int32 Id = 1;
     string Name = 2;
-    EntityType Type = 3;
-    string Ticker = 4;
-    int64 CorporationId = 5;
-    int64 AllianceId = 6;
+    string Description = 3;
+    int32 CorporationId = 4;
+    int32 AllianceId = 5;
+    int64 Birthday = 6;
+    string Gender = 7;
+    int32 RaceId = 8;
+    int32 BloodlineId = 9;
+    int32 AncestryId = 10;
+    float SecurityStatus = 11;
+    int32 FactionId = 12;
 }
 
-message Character {
-    int64 Id = 1;
-    string Name = 2;
-    int64 CorporationId = 3;
-}
-
-message Corporation {
-    int64 Id = 1;
+message CorporationResponse {
+    int32 Id = 1;
     string Name = 2;
     string Ticker = 3;
-    int64 AllianceId = 4;
+    int32 MemberCount = 4;
+    int32 CeoId = 5;
+    int32 AllianceId = 6;
+    string Description = 7;
+    float TaxRate = 8;
+    int64 CreationDate = 9;
+    int32 CreatorId = 10;
+    string Url = 11;
+    string Faction = 12;
 }
