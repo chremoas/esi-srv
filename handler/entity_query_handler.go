@@ -1,12 +1,12 @@
 package handler
 
 import (
+	"fmt"
 	"github.com/antihax/goesi"
 	"github.com/chremoas/esi-srv/proto"
 	"github.com/gregjones/httpcache"
 	"github.com/micro/go-micro/client"
 	"golang.org/x/net/context"
-	"fmt"
 )
 
 type entityQueryHandler struct {
@@ -19,97 +19,73 @@ func NewEntityQueryHandler() chremoas_esi.EntityQueryHandler {
 	return &entityQueryHandler{ESIClient: goesi.NewAPIClient(httpClient, "chremoas-esi-srv Ramdar Chinken on TweetFleet Slack https://github.com/chremoas/esi-srv")}
 }
 
-func (eqh *entityQueryHandler) GetAlliance(ctx context.Context, request *chremoas_esi.EntityQueryRequest, response *chremoas_esi.AlliancesResponse) error {
-	alliance, _, err := eqh.ESIClient.ESI.AllianceApi.GetAlliancesAllianceId(context.Background(), corporation.AllianceId, nil)
+func (eqh *entityQueryHandler) GetAlliance(ctx context.Context, request *chremoas_esi.EntityQueryRequest, response *chremoas_esi.AllianceResponse) error {
+	alliance, _, err := eqh.ESIClient.ESI.AllianceApi.GetAlliancesAllianceId(context.Background(), request.EntityId, nil)
 	if err != nil {
 		return fmt.Errorf("Had some kind of error getting the alliance '%s'\n", err)
 	}
 
-	//dbAliances := repository.AllianceRepo.FindAll()
-	//respAlliances := []*chremoas_esi.Alliance{}
-	//
-	//for _, alliance := range dbAliances {
-	//	respAlliances = append(respAlliances,
-	//		&chremoas_esi.Alliance{
-	//			Id:     alliance.AllianceId,
-	//			Name:   alliance.AllianceName,
-	//			Ticker: alliance.AllianceTicker,
-	//		},
-	//	)
-	//}
-	//
-	//response.List = respAlliances
+	response = &chremoas_esi.AllianceResponse{
+		Id: request.EntityId,
+		Name: alliance.AllianceName,
+		Ticker: alliance.Ticker,
+		ExecutorCorp: alliance.ExecutorCorp,
+		DateFounded: alliance.DateFounded.Unix(),
+	}
 
 	return nil
 }
 
-func (eqh *entityQueryHandler) GetCorporation(ctx context.Context, request *chremoas_esi.EntityQueryRequest, response *chremoas_esi.CorporationsResponse) error {
-	corporation, _, err := eqh.ESIClient.ESI.CorporationApi.GetCorporationsCorporationId(context.Background(), character.CorporationId, nil)
+func (eqh *entityQueryHandler) GetCorporation(ctx context.Context, request *chremoas_esi.EntityQueryRequest, response *chremoas_esi.CorporationResponse) error {
+	corporation, _, err := eqh.ESIClient.ESI.CorporationApi.GetCorporationsCorporationId(context.Background(), request.EntityId, nil)
 	if err != nil {
 		return fmt.Errorf("Had some kind of error getting the corporation '%s'\n", err)
 	}
 
-	//dbCorporations := repository.CorporationRepo.FindAll()
-	//respCorporations := []*chremoas_esi.Corporation{}
-	//
-	//for _, corporation := range dbCorporations {
-	//	respCorporation := &chremoas_esi.Corporation{
-	//		Id:     corporation.CorporationId,
-	//		Name:   corporation.CorporationName,
-	//		Ticker: corporation.CorporationTicker,
-	//	}
-	//
-	//	if corporation.AllianceId != nil {
-	//		respCorporation.AllianceId = *corporation.AllianceId
-	//	}
-	//
-	//	respCorporations = append(respCorporations, respCorporation)
-	//}
-	//
-	//response.List = respCorporations
+	response = &chremoas_esi.CorporationResponse{
+		Id: request.EntityId,
+		Name: corporation.CorporationName,
+		Ticker: corporation.Ticker,
+		MemberCount: corporation.MemberCount,
+		CeoId: corporation.CeoId,
+		AllianceId: corporation.AllianceId,
+		Description: corporation.CorporationDescription,
+		TaxRate: corporation.TaxRate,
+		CreationDate: corporation.CreationDate.Unix(),
+		CreatorId: corporation.CreatorId,
+		Url: corporation.Url,
+		Faction: corporation.Faction,
+	}
 
 	return nil
 }
 
-func (eqh *entityQueryHandler) GetCharacter(ctx context.Context, request *chremoas_esi.EntityQueryRequest, response *chremoas_esi.CharactersResponse) error {
-	character, _, err := eqh.ESIClient.ESI.CharacterApi.GetCharactersCharacterId(context.Background(), int32(verifyReponse.CharacterID), nil)
+func (eqh *entityQueryHandler) GetCharacter(ctx context.Context, request *chremoas_esi.EntityQueryRequest, response *chremoas_esi.CharacterResponse) error {
+	character, _, err := eqh.ESIClient.ESI.CharacterApi.GetCharactersCharacterId(context.Background(), request.EntityId, nil)
 	if err != nil {
 		return fmt.Errorf("Had some kind of error getting the character '%s'\n", err)
 	}
 
-	//dbCharacters := repository.CharacterRepo.FindAll()
-	//respCharacters := []*chremoas_esi.Character{}
-	//
-	//for _, character := range dbCharacters {
-	//	respCharacters = append(respCharacters,
-	//		&chremoas_esi.Character{
-	//			Id:            character.CharacterId,
-	//			Name:          character.CharacterName,
-	//			CorporationId: character.CorporationId,
-	//		},
-	//	)
-	//}
-	//
-	//response.List = respCharacters
+	response = &chremoas_esi.CharacterResponse{
+		Id: request.EntityId,
+		Name: character.Name,
+		Description: character.Description,
+		CorporationId: character.CorporationId,
+		AllianceId: character.AllianceId,
+		Birthday: character.Birthday.Unix(),
+		Gender: character.Gender,
+		RaceId: character.RaceId,
+		BloodlineId: character.BloodlineId,
+		AncestryId: character.AncestryId,
+		SecurityStatus: character.SecurityStatus,
+		// His docs say this exists, but it doesn't appear to
+		//FactionId: character.FacrionId,
+	}
 
 	return nil
 }
 
-func (eqh *entityQueryHandler) GetEntity(ctx context.Context, request *chremoas_esi.EntityQueryRequest, response *chremoas_esi.EntitiesResponseResponse) error {
-
-	//dbRoles := repository.RoleRepo.FindAll()
-	//respRoles := []*chremoas_esi.Role{}
-	//
-	//for _, role := range dbRoles {
-	//	respRoles = append(respRoles,
-	//		&chremoas_esi.Role{
-	//			RoleName:         role.RoleName,
-	//			ChatServiceGroup: role.ChatServiceGroup,
-	//		},
-	//	)
-	//}
-	//
-	//response.List = respRoles
+func (eqh *entityQueryHandler) GetEntity(ctx context.Context, request *chremoas_esi.EntityQueryRequest, response *chremoas_esi.EntityResponse) error {
 
 	return nil
 }
