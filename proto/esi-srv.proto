@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package chremoas.esi;
+
+enum EntityType {
+    ALLIANCE = 0;
+    CORPORATION = 1;
+    CHARACTER = 2;
+}
+
+service EntityQuery {
+    rpc GetAlliances (EntityQueryRequest) returns (AlliancesResponse) {
+    };
+    rpc GetCorporations (EntityQueryRequest) returns (CorporationsResponse) {
+    };
+    rpc GetCharacters (EntityQueryRequest) returns (CharactersResponse) {
+    };
+    rpc GetEntities (EntityQueryRequest) returns (EntitiesResponse) {
+    };
+}
+
+message EntityQueryRequest {
+    EntityType EntityType = 1;
+}
+
+message AlliancesResponse {
+    repeated Alliance List = 1;
+}
+
+message CharactersResponse {
+    repeated Character List = 1;
+}
+
+message CorporationsResponse {
+    repeated Corporation List = 1;
+}
+
+message EntitiesResponse {
+    repeated Entity List = 1;
+}
+
+message Alliance {
+    int64 Id = 1;
+    string Name = 2;
+    string Ticker = 3;
+}
+
+message Entity {
+    int64 Id = 1;
+    string Name = 2;
+    EntityType Type = 3;
+    string Ticker = 4;
+    int64 CorporationId = 5;
+    int64 AllianceId = 6;
+}
+
+message Character {
+    int64 Id = 1;
+    string Name = 2;
+    int64 CorporationId = 3;
+}
+
+message Corporation {
+    int64 Id = 1;
+    string Name = 2;
+    string Ticker = 3;
+    int64 AllianceId = 4;
+}
