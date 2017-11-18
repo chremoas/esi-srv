@@ -15,7 +15,7 @@ service EntityQuery {
     };
     rpc GetCharacter (EntityQueryRequest) returns (CharacterResponse) {
     };
-    rpc GetEntity (EntitySearchRequest) returns (EntityResponse) {
+    rpc GetSearch (EntitySearchRequest) returns (SearchResponse) {
     };
 }
 
@@ -33,14 +33,6 @@ message AllianceResponse {
     string Ticker = 3;
     int32 ExecutorCorp = 4;
     int64 DateFounded = 5;
-}
-
-message EntityResponse {
-    int32 Id = 1;
-    EntityType Type = 2;
-    AllianceResponse Alliance = 3;
-    CorporationResponse Corporation = 4;
-    CharacterResponse Character = 5;
 }
 
 message CharacterResponse {
@@ -72,4 +64,18 @@ message CorporationResponse {
     int32 CreatorId = 10;
     string Url = 11;
     string Faction = 12;
+}
+
+message SearchResponse {
+    repeated int32 Agent = 1;
+    repeated int32 Alliance = 2;
+    repeated int32 Character = 3;
+    repeated int32 Constellation = 4;
+    repeated int32 Corporation = 5;
+    repeated int32 Faction = 6;
+    repeated int32 Inventorytype = 7;
+    repeated int32 Region = 8;
+    repeated int32 Solarsystem = 9;
+    repeated int32 Station = 10;
+    repeated int32 Wormhole = 11;
 }
