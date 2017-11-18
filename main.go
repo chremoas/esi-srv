@@ -7,7 +7,7 @@ import (
 	"github.com/chremoas/esi-srv/handler"
 )
 
-var Version string = "1.0.0"
+var Version = "1.0.0"
 
 func main() {
 	service := config.NewService(Version, "esi-srv", nil)
