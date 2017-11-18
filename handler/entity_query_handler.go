@@ -85,7 +85,7 @@ func (eqh *entityQueryHandler) GetCharacter(ctx context.Context, request *chremo
 	return nil
 }
 
-func (eqh *entityQueryHandler) GetEntity(ctx context.Context, request *chremoas_esi.EntitySearchRequest, response *chremoas_esi.EntityResponse) error {
+func (eqh *entityQueryHandler) GetSearch(ctx context.Context, request *chremoas_esi.EntitySearchRequest, response *chremoas_esi.SearchResponse) error {
 
 	return nil
 }
