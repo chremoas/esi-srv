@@ -2,7 +2,7 @@ platform: linux/arm
 
 workspace:
   base: /go
-  path: src/git.maurer-it.net/abaeve/chremoas-command-template
+  path: src/git.maurer-it.net/abaeve/
 
 clone:
   default:
@@ -17,11 +17,11 @@ pipeline:
       - go get -t -v ./...
       - go get github.com/mattn/goveralls
 #      - goveralls -service=drone.io -ignore=discord/discord.go,main.go -repotoken=${repotoken}
-      - CGO_ENABLED=0 go build -ldflags "-X main.Version=$(git describe --abbrev=0 --tags)-${DRONE_BUILD_NUMBER}-$(git rev-parse --short HEAD)" -o template .
+      - CGO_ENABLED=0 go build -ldflags "-X main.Version=$(git describe --abbrev=0 --tags)-${DRONE_BUILD_NUMBER}-$(git rev-parse --short HEAD)" -o esi-srv .
 
   publish:
     image: plugins/docker:linux-arm
-    repo: registry.maurer-it.net/chremoas-command-template
+    repo: registry.maurer-it.net/
     registry: registry.maurer-it.net
     secrets:
       - source: registry_user
@@ -34,7 +34,7 @@ pipeline:
 
   publish-snapshot:
     image: plugins/docker:linux-arm
-    repo: registry.maurer-it.net/chremoas-command-template
+    repo: registry.maurer-it.net/
     registry: registry.maurer-it.net
     secrets:
       - source: registry_user
@@ -55,7 +55,7 @@ pipeline:
     port: 22
     script:
       - docker login -u ${registry_user} -p ${registry_pass} registry.maurer-it.net
-      - docker service update --with-registry-auth --image=registry.maurer-it.net/chremoas-command-template:1.0.0-SNAPSHOT template-dev
+      - docker service update --with-registry-auth --image=registry.maurer-it.net/:1.0.0-SNAPSHOT template-dev
     when:
       branch: [ release/* ]
 
@@ -69,7 +69,7 @@ pipeline:
     port: 22
     script:
       - docker login -u ${registry_user} -p ${registry_pass} registry.maurer-it.net
-      - docker service create --name template --network chremoas --with-registry-auth registry.maurer-it.net/chremoas-command-template:1.0.0
+      - docker service create --name template --network chremoas --with-registry-auth registry.maurer-it.net/:1.0.0
     when:
       event: deployment
       environment: production

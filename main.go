@@ -10,7 +10,7 @@ import (
 var Version = "1.0.0"
 
 func main() {
-	service := config.NewService(Version, "esi-srv", nil)
+	service := config.NewService(Version, "esi-srv", config.NilInit)
 
 	chremoas_esi.RegisterEntityQueryHandler(service.Server(), handler.NewEntityQueryHandler())
 
