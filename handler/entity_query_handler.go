@@ -86,6 +86,7 @@ func (eqh *entityQueryHandler) GetCharacter(ctx context.Context, request *chremo
 }
 
 func (eqh *entityQueryHandler) GetSearch(ctx context.Context, request *chremoas_esi.EntitySearchRequest, response *chremoas_esi.SearchResponse) error {
+	// I dislike having to do this as two calls but there is a limit of 10 categories per call
 	var categories1 = []string{"agent", "alliance", "character", "constellation", "corporation"}
 	result1, _, err1 := eqh.ESIClient.ESI.SearchApi.GetSearch(context.Background(), categories1, request.SearchString, nil)
 	if err1 != nil {
