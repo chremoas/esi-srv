@@ -79,13 +79,38 @@ func (eqh *entityQueryHandler) GetCharacter(ctx context.Context, request *chremo
 		AncestryId: character.AncestryId,
 		SecurityStatus: character.SecurityStatus,
 		// His docs say this exists, but it doesn't appear to
-		//FactionId: character.FacrionId,
+		//FactionId: character.FactionId
 	}
 
 	return nil
 }
 
 func (eqh *entityQueryHandler) GetSearch(ctx context.Context, request *chremoas_esi.EntitySearchRequest, response *chremoas_esi.SearchResponse) error {
+	var categories1 = []string{"agent", "alliance", "character", "constellation", "corporation"}
+	result1, _, err1 := eqh.ESIClient.ESI.SearchApi.GetSearch(context.Background(), categories1, request.SearchString, nil)
+	if err1 != nil {
+		return fmt.Errorf("Had some kind of error searching '%s'\n", err1)
+	}
+
+	var categories2 = []string{"faction", "inventorytype", "region", "solarsystem", "station", "wormhole"}
+	result2, _, err2 := eqh.ESIClient.ESI.SearchApi.GetSearch(context.Background(), categories2, request.SearchString, nil)
+	if err2 != nil {
+		return fmt.Errorf("Had some kind of error searching '%s'\n", err2)
+	}
+
+	response = &chremoas_esi.SearchResponse{
+		Agent: result1.Agent,
+		Alliance: result1.Alliance,
+		Character: result1.Character,
+		Constellation: result1.Constellation,
+		Corporation: result1.Corporation,
+		Faction: result2.Faction,
+		Inventorytype: result2.Inventorytype,
+		Region: result2.Region,
+		Solarsystem: result2.Solarsystem,
+		Station: result2.Station,
+		Wormhole: result2.Wormhole,
+	}
 
 	return nil
 }
