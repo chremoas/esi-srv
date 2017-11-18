@@ -25,7 +25,7 @@ func (eqh *entityQueryHandler) GetAlliance(ctx context.Context, request *chremoa
 		return fmt.Errorf("Had some kind of error getting the alliance '%s'\n", err)
 	}
 
-	response = &chremoas_esi.AllianceResponse{
+	response.Result = &chremoas_esi.Alliance{
 		Id: request.EntityId,
 		Name: alliance.AllianceName,
 		Ticker: alliance.Ticker,
@@ -42,7 +42,7 @@ func (eqh *entityQueryHandler) GetCorporation(ctx context.Context, request *chre
 		return fmt.Errorf("Had some kind of error getting the corporation '%s'\n", err)
 	}
 
-	response = &chremoas_esi.CorporationResponse{
+	response.Result = &chremoas_esi.Corporation{
 		Id: request.EntityId,
 		Name: corporation.CorporationName,
 		Ticker: corporation.Ticker,
@@ -66,7 +66,7 @@ func (eqh *entityQueryHandler) GetCharacter(ctx context.Context, request *chremo
 		return fmt.Errorf("Had some kind of error getting the character '%s'\n", err)
 	}
 
-	response = &chremoas_esi.CharacterResponse{
+	response.Result = &chremoas_esi.Character{
 		Id: request.EntityId,
 		Name: character.Name,
 		Description: character.Description,

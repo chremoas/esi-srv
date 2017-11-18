@@ -28,6 +28,18 @@ message EntitySearchRequest {
 }
 
 message AllianceResponse {
+    Alliance Result = 1;
+}
+
+message CorporationResponse {
+    Corporation Result = 1;
+}
+
+message CharacterResponse {
+    Character Result = 1;
+}
+
+message Alliance {
     int32 Id = 1;
     string Name = 2;
     string Ticker = 3;
@@ -35,7 +47,22 @@ message AllianceResponse {
     int64 DateFounded = 5;
 }
 
-message CharacterResponse {
+message Corporation {
+    int32 Id = 1;
+    string Name = 2;
+    string Ticker = 3;
+    int32 MemberCount = 4;
+    int32 CeoId = 5;
+    int32 AllianceId = 6;
+    string Description = 7;
+    float TaxRate = 8;
+    int64 CreationDate = 9;
+    int32 CreatorId = 10;
+    string Url = 11;
+    string Faction = 12;
+}
+
+message Character {
     int32 Id = 1;
     string Name = 2;
     string Description = 3;
@@ -49,21 +76,6 @@ message CharacterResponse {
     float SecurityStatus = 11;
     // His docs say this exists, but it doesn't appear to
     //int32 FactionId = 12;
-}
-
-message CorporationResponse {
-    int32 Id = 1;
-    string Name = 2;
-    string Ticker = 3;
-    int32 MemberCount = 4;
-    int32 CeoId = 5;
-    int32 AllianceId = 6;
-    string Description = 7;
-    float TaxRate = 8;
-    int64 CreationDate = 9;
-    int32 CreatorId = 10;
-    string Url = 11;
-    string Faction = 12;
 }
 
 message SearchResponse {
