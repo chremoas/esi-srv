@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/abaeve/services-common/config"
+	"github.com/chremoas/services-common/config"
 	"github.com/chremoas/esi-srv/proto"
 	"github.com/chremoas/esi-srv/handler"
 )
