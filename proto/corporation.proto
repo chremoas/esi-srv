@@ -2,13 +2,11 @@ syntax = "proto3";
 
 package chremoas.esi;
 
+import "common.proto";
+
 service CorporationQuery {
     rpc GetCorporation (EntityQueryRequest) returns (CorporationResponse) {
     };
-}
-
-message EntityQueryRequest {
-    int32 EntityId = 1;
 }
 
 message CorporationResponse {

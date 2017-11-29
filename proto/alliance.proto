@@ -2,13 +2,11 @@ syntax = "proto3";
 
 package chremoas.esi;
 
+import "common.proto";
+
 service AllianceQuery {
     rpc GetAlliance (EntityQueryRequest) returns (AllianceResponse) {
     };
-}
-
-message EntityQueryRequest {
-    int32 EntityId = 1;
 }
 
 message AllianceResponse {
