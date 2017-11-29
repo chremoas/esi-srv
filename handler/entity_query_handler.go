@@ -14,12 +14,27 @@ type entityQueryHandler struct {
 	ESIClient *goesi.APIClient
 }
 
-func NewEntityQueryHandler() chremoas_esi.EntityQueryHandler {
+func NewAllianceQueryHandler() chremoas_esi.AllianceQueryHandler {
 	httpClient := httpcache.NewMemoryCacheTransport().Client()
 	return &entityQueryHandler{ESIClient: goesi.NewAPIClient(httpClient, "chremoas-esi-srv Ramdar Chinken on TweetFleet Slack https://github.com/chremoas/esi-srv")}
 }
 
-func (eqh *entityQueryHandler) GetAlliance(ctx context.Context, request *chremoas_esi.EntityQueryRequest, response *chremoas_esi.AllianceResponse) error {
+func NewCorporationQueryHandler() chremoas_esi.CorporationQueryHandler {
+	httpClient := httpcache.NewMemoryCacheTransport().Client()
+	return &entityQueryHandler{ESIClient: goesi.NewAPIClient(httpClient, "chremoas-esi-srv Ramdar Chinken on TweetFleet Slack https://github.com/chremoas/esi-srv")}
+}
+
+func NewCharacterQueryHandler() chremoas_esi.CharacterQueryHandler {
+	httpClient := httpcache.NewMemoryCacheTransport().Client()
+	return &entityQueryHandler{ESIClient: goesi.NewAPIClient(httpClient, "chremoas-esi-srv Ramdar Chinken on TweetFleet Slack https://github.com/chremoas/esi-srv")}
+}
+
+func NewSearchQueryHandler() chremoas_esi.SearchQueryHandler {
+	httpClient := httpcache.NewMemoryCacheTransport().Client()
+	return &entityQueryHandler{ESIClient: goesi.NewAPIClient(httpClient, "chremoas-esi-srv Ramdar Chinken on TweetFleet Slack https://github.com/chremoas/esi-srv")}
+}
+
+func (eqh *entityQueryHandler) GetAlliance(ctx context.Context, request *chremoas_esi.AllianceRequest, response *chremoas_esi.AllianceResponse) error {
 	alliance, _, err := eqh.ESIClient.ESI.AllianceApi.GetAlliancesAllianceId(context.Background(), request.EntityId, nil)
 	if err != nil {
 		return fmt.Errorf("Had some kind of error getting the alliance '%s'\n", err)
@@ -36,7 +51,7 @@ func (eqh *entityQueryHandler) GetAlliance(ctx context.Context, request *chremoa
 	return nil
 }
 
-func (eqh *entityQueryHandler) GetCorporation(ctx context.Context, request *chremoas_esi.EntityQueryRequest, response *chremoas_esi.CorporationResponse) error {
+func (eqh *entityQueryHandler) GetCorporation(ctx context.Context, request *chremoas_esi.CorporationRequest, response *chremoas_esi.CorporationResponse) error {
 	corporation, _, err := eqh.ESIClient.ESI.CorporationApi.GetCorporationsCorporationId(context.Background(), request.EntityId, nil)
 	if err != nil {
 		return fmt.Errorf("Had some kind of error getting the corporation '%s'\n", err)
@@ -60,7 +75,7 @@ func (eqh *entityQueryHandler) GetCorporation(ctx context.Context, request *chre
 	return nil
 }
 
-func (eqh *entityQueryHandler) GetCharacter(ctx context.Context, request *chremoas_esi.EntityQueryRequest, response *chremoas_esi.CharacterResponse) error {
+func (eqh *entityQueryHandler) GetCharacter(ctx context.Context, request *chremoas_esi.CharacterRequest, response *chremoas_esi.CharacterResponse) error {
 	character, _, err := eqh.ESIClient.ESI.CharacterApi.GetCharactersCharacterId(context.Background(), request.EntityId, nil)
 	if err != nil {
 		return fmt.Errorf("Had some kind of error getting the character '%s'\n", err)
@@ -85,7 +100,7 @@ func (eqh *entityQueryHandler) GetCharacter(ctx context.Context, request *chremo
 	return nil
 }
 
-func (eqh *entityQueryHandler) GetSearch(ctx context.Context, request *chremoas_esi.EntitySearchRequest, response *chremoas_esi.SearchResponse) error {
+func (eqh *entityQueryHandler) GetSearch(ctx context.Context, request *chremoas_esi.SearchRequest, response *chremoas_esi.SearchResponse) error {
 	// I dislike having to do this as two calls but there is a limit of 10 categories per call
 	var categories1 = []string{"agent", "alliance", "character", "constellation", "corporation"}
 	result1, _, err1 := eqh.ESIClient.ESI.SearchApi.GetSearch(context.Background(), categories1, request.SearchString, nil)

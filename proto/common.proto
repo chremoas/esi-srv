@@ -7,11 +7,3 @@ enum EntityType {
     CORPORATION = 1;
     CHARACTER = 2;
 }
-
-message EntityQueryRequest {
-    int32 EntityId = 1;
-}
-
-message EntitySearchRequest {
-    string SearchString = 1;
-}
