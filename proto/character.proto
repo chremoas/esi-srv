@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package chremoas.esi;
+
+service CharacterQuery {
+    rpc GetCharacter (EntityQueryRequest) returns (CharacterResponse) {
+    };
+}
+
+message EntityQueryRequest {
+    int32 EntityId = 1;
+}
+
+message CharacterResponse {
+    Character Result = 1;
+}
+
+message Character {
+    int32 Id = 1;
+    string Name = 2;
+    string Description = 3;
+    int32 CorporationId = 4;
+    int32 AllianceId = 5;
+    int64 Birthday = 6;
+    string Gender = 7;
+    int32 RaceId = 8;
+    int32 BloodlineId = 9;
+    int32 AncestryId = 10;
+    float SecurityStatus = 11;
+    // His docs say this exists, but it doesn't appear to
+    //int32 FactionId = 12;
+}

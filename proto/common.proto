@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package chremoas.esi;
+
+enum EntityType {
+    ALLIANCE = 0;
+    CORPORATION = 1;
+    CHARACTER = 2;
+}

@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package chremoas.esi;
+
+service AllianceQuery {
+    rpc GetAlliance (EntityQueryRequest) returns (AllianceResponse) {
+    };
+}
+
+message EntityQueryRequest {
+    int32 EntityId = 1;
+}
+
+message AllianceResponse {
+    Alliance Result = 1;
+}
+
+message Alliance {
+    int32 Id = 1;
+    string Name = 2;
+    string Ticker = 3;
+    int32 ExecutorCorp = 4;
+    int64 DateFounded = 5;
+}
