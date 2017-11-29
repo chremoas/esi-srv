@@ -34,18 +34,67 @@ func NewSearchQueryHandler() chremoas_esi.SearchQueryHandler {
 	return &entityQueryHandler{ESIClient: goesi.NewAPIClient(httpClient, "chremoas-esi-srv Ramdar Chinken on TweetFleet Slack https://github.com/chremoas/esi-srv")}
 }
 
-func (eqh *entityQueryHandler) GetAlliance(ctx context.Context, request *chremoas_esi.AllianceRequest, response *chremoas_esi.AllianceResponse) error {
-	alliance, _, err := eqh.ESIClient.ESI.AllianceApi.GetAlliancesAllianceId(context.Background(), request.EntityId, nil)
+func (eqh *entityQueryHandler) GetAlliances(ctx context.Context, request *chremoas_esi.EmptyRequest, response *chremoas_esi.AlliancesResponse) error {
+	alliance, _, err := eqh.ESIClient.ESI.AllianceApi.GetAlliances(context.Background(), nil)
 	if err != nil {
 		return fmt.Errorf("Had some kind of error getting the alliance '%s'\n", err)
 	}
 
-	response.Result = &chremoas_esi.Alliance{
-		Id: request.EntityId,
-		Name: alliance.AllianceName,
-		Ticker: alliance.Ticker,
+	response.AllianceIds = alliance
+
+	return nil
+}
+
+func (eqh *entityQueryHandler) GetAllianceId(ctx context.Context, request *chremoas_esi.AllianceRequest, response *chremoas_esi.AllianceIdResponse) error {
+	alliance, _, err := eqh.ESIClient.ESI.AllianceApi.GetAlliancesAllianceId(context.Background(), request.AllianceId, nil)
+	if err != nil {
+		return fmt.Errorf("Had some kind of error getting the alliance '%s'\n", err)
+	}
+
+	response.Alliance = &chremoas_esi.Alliance{
+		Id:           request.AllianceId,
+		Name:         alliance.AllianceName,
+		Ticker:       alliance.Ticker,
 		ExecutorCorp: alliance.ExecutorCorp,
-		DateFounded: alliance.DateFounded.Unix(),
+		DateFounded:  alliance.DateFounded.Unix(),
+	}
+
+	return nil
+}
+
+func (eqh *entityQueryHandler) GetAllianceIdCorporations(ctx context.Context, request *chremoas_esi.AllianceRequest, response *chremoas_esi.CorporationsResponse) error {
+	alliance, _, err := eqh.ESIClient.ESI.AllianceApi.GetAlliancesAllianceIdCorporations(context.Background(), request.AllianceId, nil)
+	if err != nil {
+		return fmt.Errorf("Had some kind of error getting the alliance '%s'\n", err)
+	}
+
+	response.Corporations = alliance
+
+	return nil
+}
+
+func (eqh *entityQueryHandler) GetAllianceIdIcons(ctx context.Context, request *chremoas_esi.AllianceRequest, response *chremoas_esi.AllianceIconResponse) error {
+	alliance, _, err := eqh.ESIClient.ESI.AllianceApi.GetAlliancesAllianceIdIcons(context.Background(), request.AllianceId, nil)
+	if err != nil {
+		return fmt.Errorf("Had some kind of error getting the alliance '%s'\n", err)
+	}
+
+	response.Icons = &chremoas_esi.Icons{
+		PSixtyFour:   alliance.Px64x64,
+		POneTwentyEight: alliance.Px128x128,
+	}
+
+	return nil
+}
+
+func (eqh *entityQueryHandler) GetAllianceNames(ctx context.Context, request *chremoas_esi.AllianceNamesRequest, response *chremoas_esi.AllianceNamesResponse) error {
+	alliance, _, err := eqh.ESIClient.ESI.AllianceApi.GetAlliancesNames(context.Background(), request.AllianceIds, nil)
+	if err != nil {
+		return fmt.Errorf("Had some kind of error getting the alliance '%s'\n", err)
+	}
+
+	for _, v := range alliance {
+		response.AllianceNames = append(response.AllianceNames, &chremoas_esi.AllianceNames{AllianceId: v.AllianceId, AllianceName: v.AllianceName})
 	}
 
 	return nil
@@ -58,18 +107,18 @@ func (eqh *entityQueryHandler) GetCorporation(ctx context.Context, request *chre
 	}
 
 	response.Result = &chremoas_esi.Corporation{
-		Id: request.EntityId,
-		Name: corporation.CorporationName,
-		Ticker: corporation.Ticker,
-		MemberCount: corporation.MemberCount,
-		CeoId: corporation.CeoId,
-		AllianceId: corporation.AllianceId,
-		Description: corporation.CorporationDescription,
-		TaxRate: corporation.TaxRate,
+		Id:           request.EntityId,
+		Name:         corporation.CorporationName,
+		Ticker:       corporation.Ticker,
+		MemberCount:  corporation.MemberCount,
+		CeoId:        corporation.CeoId,
+		AllianceId:   corporation.AllianceId,
+		Description:  corporation.CorporationDescription,
+		TaxRate:      corporation.TaxRate,
 		CreationDate: corporation.CreationDate.Unix(),
-		CreatorId: corporation.CreatorId,
-		Url: corporation.Url,
-		Faction: corporation.Faction,
+		CreatorId:    corporation.CreatorId,
+		Url:          corporation.Url,
+		Faction:      corporation.Faction,
 	}
 
 	return nil
@@ -82,16 +131,16 @@ func (eqh *entityQueryHandler) GetCharacter(ctx context.Context, request *chremo
 	}
 
 	response.Result = &chremoas_esi.Character{
-		Id: request.EntityId,
-		Name: character.Name,
-		Description: character.Description,
-		CorporationId: character.CorporationId,
-		AllianceId: character.AllianceId,
-		Birthday: character.Birthday.Unix(),
-		Gender: character.Gender,
-		RaceId: character.RaceId,
-		BloodlineId: character.BloodlineId,
-		AncestryId: character.AncestryId,
+		Id:             request.EntityId,
+		Name:           character.Name,
+		Description:    character.Description,
+		CorporationId:  character.CorporationId,
+		AllianceId:     character.AllianceId,
+		Birthday:       character.Birthday.Unix(),
+		Gender:         character.Gender,
+		RaceId:         character.RaceId,
+		BloodlineId:    character.BloodlineId,
+		AncestryId:     character.AncestryId,
 		SecurityStatus: character.SecurityStatus,
 		// His docs say this exists, but it doesn't appear to
 		//FactionId: character.FactionId
@@ -115,17 +164,17 @@ func (eqh *entityQueryHandler) GetSearch(ctx context.Context, request *chremoas_
 	}
 
 	response = &chremoas_esi.SearchResponse{
-		Agent: result1.Agent,
-		Alliance: result1.Alliance,
-		Character: result1.Character,
+		Agent:         result1.Agent,
+		Alliance:      result1.Alliance,
+		Character:     result1.Character,
 		Constellation: result1.Constellation,
-		Corporation: result1.Corporation,
-		Faction: result2.Faction,
+		Corporation:   result1.Corporation,
+		Faction:       result2.Faction,
 		Inventorytype: result2.Inventorytype,
-		Region: result2.Region,
-		Solarsystem: result2.Solarsystem,
-		Station: result2.Station,
-		Wormhole: result2.Wormhole,
+		Region:        result2.Region,
+		Solarsystem:   result2.Solarsystem,
+		Station:       result2.Station,
+		Wormhole:      result2.Wormhole,
 	}
 
 	return nil

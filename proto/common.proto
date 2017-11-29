@@ -7,3 +7,9 @@ enum EntityType {
     CORPORATION = 1;
     CHARACTER = 2;
 }
+
+message EmptyRequest {}
+
+message EntityRequest {
+    int32 EntityId = 1;
+}

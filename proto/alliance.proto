@@ -2,17 +2,47 @@ syntax = "proto3";
 
 package chremoas.esi;
 
+import "common.proto";
+
 service AllianceQuery {
-    rpc GetAlliance (AllianceRequest) returns (AllianceResponse) {
+    rpc GetAlliances (EmptyRequest) returns (AlliancesResponse) {
+    };
+    rpc GetAllianceId (AllianceRequest) returns (AllianceIdResponse) {
+    };
+    rpc GetAllianceIdCorporations (AllianceRequest) returns (CorporationsResponse) {
+    };
+    rpc GetAllianceIdIcons (AllianceRequest) returns (AllianceIconResponse) {
+    };
+    rpc GetAllianceNames (AllianceNamesRequest) returns (AllianceNamesResponse) {
     };
 }
 
 message AllianceRequest {
-    int32 EntityId = 1;
+    int32 AllianceId = 1;
 }
 
-message AllianceResponse {
-    Alliance Result = 1;
+message AllianceNamesRequest {
+    repeated int64 AllianceIds = 1;
+}
+
+message AlliancesResponse {
+    repeated int32 AllianceIds = 1;
+}
+
+message AllianceIdResponse {
+    Alliance Alliance = 1;
+}
+
+message AllianceIconResponse {
+    Icons Icons = 1;
+}
+
+message CorporationsResponse {
+    repeated int32 Corporations = 1;
+}
+
+message AllianceNamesResponse {
+    repeated AllianceNames AllianceNames = 1;
 }
 
 message Alliance {
@@ -21,4 +51,14 @@ message Alliance {
     string Ticker = 3;
     int32 ExecutorCorp = 4;
     int64 DateFounded = 5;
+}
+
+message Icons {
+    string PSixtyFour = 1;
+    string POneTwentyEight = 2;
+}
+
+message AllianceNames {
+    int32 AllianceId = 1;
+    string AllianceName = 2;
 }
