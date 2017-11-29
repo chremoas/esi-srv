@@ -6,11 +6,23 @@ Package chremoas_esi is a generated protocol buffer package.
 
 It is generated from these files:
 	alliance.proto
+	character.proto
+	common.proto
+	corporation.proto
+	search.proto
 
 It has these top-level messages:
 	AllianceRequest
 	AllianceResponse
 	Alliance
+	CharacterRequest
+	CharacterResponse
+	Character
+	CorporationRequest
+	CorporationResponse
+	Corporation
+	SearchRequest
+	SearchResponse
 */
 package chremoas_esi
 
