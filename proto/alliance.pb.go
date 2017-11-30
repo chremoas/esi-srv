@@ -12,24 +12,25 @@ It is generated from these files:
 	search.proto
 
 It has these top-level messages:
-	AllianceRequest
-	AllianceNamesRequest
-	AlliancesResponse
-	AllianceIdResponse
-	AllianceIconResponse
-	CorporationsResponse
-	AllianceNamesResponse
+	GetAlliancesRequest
+	GetAlliancesResponse
+	GetAllianceByIdRequest
+	GetAllianceByIdResponse
+	GetAllianceCorporationsByIdRequest
+	GetAllianceCorporationsByIdResponse
+	GetAllianceIconsByIdRequest
+	GetAllianceIconsByIdResponse
+	GetAllianceNamesByIdsRequest
+	GetAllianceNamesByIdsResponse
+	GetCharacterByIdRequest
+	GetCharacterByIdResponse
 	Alliance
 	Icons
 	AllianceNames
-	CharacterRequest
-	CharacterResponse
 	Character
-	EmptyRequest
-	EntityRequest
-	CorporationRequest
-	CorporationResponse
 	Corporation
+	GetCorporationByIdRequest
+	GetCorporationByIdResponse
 	SearchRequest
 	SearchResponse
 */
@@ -56,225 +57,174 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-type AllianceRequest struct {
-	AllianceId int32 `protobuf:"varint,1,opt,name=AllianceId" json:"AllianceId,omitempty"`
+type GetAlliancesRequest struct {
 }
 
-func (m *AllianceRequest) Reset()                    { *m = AllianceRequest{} }
-func (m *AllianceRequest) String() string            { return proto.CompactTextString(m) }
-func (*AllianceRequest) ProtoMessage()               {}
-func (*AllianceRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *GetAlliancesRequest) Reset()                    { *m = GetAlliancesRequest{} }
+func (m *GetAlliancesRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetAlliancesRequest) ProtoMessage()               {}
+func (*GetAlliancesRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
-func (m *AllianceRequest) GetAllianceId() int32 {
+type GetAlliancesResponse struct {
+	Ids []int32 `protobuf:"varint,1,rep,packed,name=Ids" json:"Ids,omitempty"`
+}
+
+func (m *GetAlliancesResponse) Reset()                    { *m = GetAlliancesResponse{} }
+func (m *GetAlliancesResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetAlliancesResponse) ProtoMessage()               {}
+func (*GetAlliancesResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+
+func (m *GetAlliancesResponse) GetIds() []int32 {
 	if m != nil {
-		return m.AllianceId
-	}
-	return 0
-}
-
-type AllianceNamesRequest struct {
-	AllianceIds []int64 `protobuf:"varint,1,rep,packed,name=AllianceIds" json:"AllianceIds,omitempty"`
-}
-
-func (m *AllianceNamesRequest) Reset()                    { *m = AllianceNamesRequest{} }
-func (m *AllianceNamesRequest) String() string            { return proto.CompactTextString(m) }
-func (*AllianceNamesRequest) ProtoMessage()               {}
-func (*AllianceNamesRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
-
-func (m *AllianceNamesRequest) GetAllianceIds() []int64 {
-	if m != nil {
-		return m.AllianceIds
+		return m.Ids
 	}
 	return nil
 }
 
-type AlliancesResponse struct {
-	AllianceIds []int32 `protobuf:"varint,1,rep,packed,name=AllianceIds" json:"AllianceIds,omitempty"`
+type GetAllianceByIdRequest struct {
+	Id int32 `protobuf:"varint,1,opt,name=Id" json:"Id,omitempty"`
 }
 
-func (m *AlliancesResponse) Reset()                    { *m = AlliancesResponse{} }
-func (m *AlliancesResponse) String() string            { return proto.CompactTextString(m) }
-func (*AlliancesResponse) ProtoMessage()               {}
-func (*AlliancesResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+func (m *GetAllianceByIdRequest) Reset()                    { *m = GetAllianceByIdRequest{} }
+func (m *GetAllianceByIdRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetAllianceByIdRequest) ProtoMessage()               {}
+func (*GetAllianceByIdRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
 
-func (m *AlliancesResponse) GetAllianceIds() []int32 {
-	if m != nil {
-		return m.AllianceIds
-	}
-	return nil
-}
-
-type AllianceIdResponse struct {
-	Alliance *Alliance `protobuf:"bytes,1,opt,name=Alliance" json:"Alliance,omitempty"`
-}
-
-func (m *AllianceIdResponse) Reset()                    { *m = AllianceIdResponse{} }
-func (m *AllianceIdResponse) String() string            { return proto.CompactTextString(m) }
-func (*AllianceIdResponse) ProtoMessage()               {}
-func (*AllianceIdResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
-
-func (m *AllianceIdResponse) GetAlliance() *Alliance {
-	if m != nil {
-		return m.Alliance
-	}
-	return nil
-}
-
-type AllianceIconResponse struct {
-	Icons *Icons `protobuf:"bytes,1,opt,name=Icons" json:"Icons,omitempty"`
-}
-
-func (m *AllianceIconResponse) Reset()                    { *m = AllianceIconResponse{} }
-func (m *AllianceIconResponse) String() string            { return proto.CompactTextString(m) }
-func (*AllianceIconResponse) ProtoMessage()               {}
-func (*AllianceIconResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
-
-func (m *AllianceIconResponse) GetIcons() *Icons {
-	if m != nil {
-		return m.Icons
-	}
-	return nil
-}
-
-type CorporationsResponse struct {
-	Corporations []int32 `protobuf:"varint,1,rep,packed,name=Corporations" json:"Corporations,omitempty"`
-}
-
-func (m *CorporationsResponse) Reset()                    { *m = CorporationsResponse{} }
-func (m *CorporationsResponse) String() string            { return proto.CompactTextString(m) }
-func (*CorporationsResponse) ProtoMessage()               {}
-func (*CorporationsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
-
-func (m *CorporationsResponse) GetCorporations() []int32 {
-	if m != nil {
-		return m.Corporations
-	}
-	return nil
-}
-
-type AllianceNamesResponse struct {
-	AllianceNames []*AllianceNames `protobuf:"bytes,1,rep,name=AllianceNames" json:"AllianceNames,omitempty"`
-}
-
-func (m *AllianceNamesResponse) Reset()                    { *m = AllianceNamesResponse{} }
-func (m *AllianceNamesResponse) String() string            { return proto.CompactTextString(m) }
-func (*AllianceNamesResponse) ProtoMessage()               {}
-func (*AllianceNamesResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
-
-func (m *AllianceNamesResponse) GetAllianceNames() []*AllianceNames {
-	if m != nil {
-		return m.AllianceNames
-	}
-	return nil
-}
-
-type Alliance struct {
-	Id           int32  `protobuf:"varint,1,opt,name=Id" json:"Id,omitempty"`
-	Name         string `protobuf:"bytes,2,opt,name=Name" json:"Name,omitempty"`
-	Ticker       string `protobuf:"bytes,3,opt,name=Ticker" json:"Ticker,omitempty"`
-	ExecutorCorp int32  `protobuf:"varint,4,opt,name=ExecutorCorp" json:"ExecutorCorp,omitempty"`
-	DateFounded  int64  `protobuf:"varint,5,opt,name=DateFounded" json:"DateFounded,omitempty"`
-}
-
-func (m *Alliance) Reset()                    { *m = Alliance{} }
-func (m *Alliance) String() string            { return proto.CompactTextString(m) }
-func (*Alliance) ProtoMessage()               {}
-func (*Alliance) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
-
-func (m *Alliance) GetId() int32 {
+func (m *GetAllianceByIdRequest) GetId() int32 {
 	if m != nil {
 		return m.Id
 	}
 	return 0
 }
 
-func (m *Alliance) GetName() string {
+type GetAllianceByIdResponse struct {
+	Alliance *Alliance `protobuf:"bytes,1,opt,name=Alliance" json:"Alliance,omitempty"`
+}
+
+func (m *GetAllianceByIdResponse) Reset()                    { *m = GetAllianceByIdResponse{} }
+func (m *GetAllianceByIdResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetAllianceByIdResponse) ProtoMessage()               {}
+func (*GetAllianceByIdResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+
+func (m *GetAllianceByIdResponse) GetAlliance() *Alliance {
 	if m != nil {
-		return m.Name
+		return m.Alliance
 	}
-	return ""
+	return nil
 }
 
-func (m *Alliance) GetTicker() string {
+// GetAllianceCorporationsById
+type GetAllianceCorporationsByIdRequest struct {
+	Id int32 `protobuf:"varint,1,opt,name=Id" json:"Id,omitempty"`
+}
+
+func (m *GetAllianceCorporationsByIdRequest) Reset()         { *m = GetAllianceCorporationsByIdRequest{} }
+func (m *GetAllianceCorporationsByIdRequest) String() string { return proto.CompactTextString(m) }
+func (*GetAllianceCorporationsByIdRequest) ProtoMessage()    {}
+func (*GetAllianceCorporationsByIdRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor0, []int{4}
+}
+
+func (m *GetAllianceCorporationsByIdRequest) GetId() int32 {
 	if m != nil {
-		return m.Ticker
-	}
-	return ""
-}
-
-func (m *Alliance) GetExecutorCorp() int32 {
-	if m != nil {
-		return m.ExecutorCorp
-	}
-	return 0
-}
-
-func (m *Alliance) GetDateFounded() int64 {
-	if m != nil {
-		return m.DateFounded
-	}
-	return 0
-}
-
-type Icons struct {
-	PSixtyFour      string `protobuf:"bytes,1,opt,name=PSixtyFour" json:"PSixtyFour,omitempty"`
-	POneTwentyEight string `protobuf:"bytes,2,opt,name=POneTwentyEight" json:"POneTwentyEight,omitempty"`
-}
-
-func (m *Icons) Reset()                    { *m = Icons{} }
-func (m *Icons) String() string            { return proto.CompactTextString(m) }
-func (*Icons) ProtoMessage()               {}
-func (*Icons) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
-
-func (m *Icons) GetPSixtyFour() string {
-	if m != nil {
-		return m.PSixtyFour
-	}
-	return ""
-}
-
-func (m *Icons) GetPOneTwentyEight() string {
-	if m != nil {
-		return m.POneTwentyEight
-	}
-	return ""
-}
-
-type AllianceNames struct {
-	AllianceId   int32  `protobuf:"varint,1,opt,name=AllianceId" json:"AllianceId,omitempty"`
-	AllianceName string `protobuf:"bytes,2,opt,name=AllianceName" json:"AllianceName,omitempty"`
-}
-
-func (m *AllianceNames) Reset()                    { *m = AllianceNames{} }
-func (m *AllianceNames) String() string            { return proto.CompactTextString(m) }
-func (*AllianceNames) ProtoMessage()               {}
-func (*AllianceNames) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
-
-func (m *AllianceNames) GetAllianceId() int32 {
-	if m != nil {
-		return m.AllianceId
+		return m.Id
 	}
 	return 0
 }
 
-func (m *AllianceNames) GetAllianceName() string {
+type GetAllianceCorporationsByIdResponse struct {
+	Ids []int32 `protobuf:"varint,1,rep,packed,name=Ids" json:"Ids,omitempty"`
+}
+
+func (m *GetAllianceCorporationsByIdResponse) Reset()         { *m = GetAllianceCorporationsByIdResponse{} }
+func (m *GetAllianceCorporationsByIdResponse) String() string { return proto.CompactTextString(m) }
+func (*GetAllianceCorporationsByIdResponse) ProtoMessage()    {}
+func (*GetAllianceCorporationsByIdResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor0, []int{5}
+}
+
+func (m *GetAllianceCorporationsByIdResponse) GetIds() []int32 {
 	if m != nil {
-		return m.AllianceName
+		return m.Ids
 	}
-	return ""
+	return nil
+}
+
+type GetAllianceIconsByIdRequest struct {
+	Id int32 `protobuf:"varint,1,opt,name=Id" json:"Id,omitempty"`
+}
+
+func (m *GetAllianceIconsByIdRequest) Reset()                    { *m = GetAllianceIconsByIdRequest{} }
+func (m *GetAllianceIconsByIdRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetAllianceIconsByIdRequest) ProtoMessage()               {}
+func (*GetAllianceIconsByIdRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
+
+func (m *GetAllianceIconsByIdRequest) GetId() int32 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+type GetAllianceIconsByIdResponse struct {
+	Icons *Icons `protobuf:"bytes,1,opt,name=Icons" json:"Icons,omitempty"`
+}
+
+func (m *GetAllianceIconsByIdResponse) Reset()                    { *m = GetAllianceIconsByIdResponse{} }
+func (m *GetAllianceIconsByIdResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetAllianceIconsByIdResponse) ProtoMessage()               {}
+func (*GetAllianceIconsByIdResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
+
+func (m *GetAllianceIconsByIdResponse) GetIcons() *Icons {
+	if m != nil {
+		return m.Icons
+	}
+	return nil
+}
+
+type GetAllianceNamesByIdsRequest struct {
+	Ids []int64 `protobuf:"varint,1,rep,packed,name=Ids" json:"Ids,omitempty"`
+}
+
+func (m *GetAllianceNamesByIdsRequest) Reset()                    { *m = GetAllianceNamesByIdsRequest{} }
+func (m *GetAllianceNamesByIdsRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetAllianceNamesByIdsRequest) ProtoMessage()               {}
+func (*GetAllianceNamesByIdsRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
+
+func (m *GetAllianceNamesByIdsRequest) GetIds() []int64 {
+	if m != nil {
+		return m.Ids
+	}
+	return nil
+}
+
+type GetAllianceNamesByIdsResponse struct {
+	Names []*AllianceNames `protobuf:"bytes,1,rep,name=Names" json:"Names,omitempty"`
+}
+
+func (m *GetAllianceNamesByIdsResponse) Reset()                    { *m = GetAllianceNamesByIdsResponse{} }
+func (m *GetAllianceNamesByIdsResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetAllianceNamesByIdsResponse) ProtoMessage()               {}
+func (*GetAllianceNamesByIdsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
+
+func (m *GetAllianceNamesByIdsResponse) GetNames() []*AllianceNames {
+	if m != nil {
+		return m.Names
+	}
+	return nil
 }
 
 func init() {
-	proto.RegisterType((*AllianceRequest)(nil), "chremoas.esi.AllianceRequest")
-	proto.RegisterType((*AllianceNamesRequest)(nil), "chremoas.esi.AllianceNamesRequest")
-	proto.RegisterType((*AlliancesResponse)(nil), "chremoas.esi.AlliancesResponse")
-	proto.RegisterType((*AllianceIdResponse)(nil), "chremoas.esi.AllianceIdResponse")
-	proto.RegisterType((*AllianceIconResponse)(nil), "chremoas.esi.AllianceIconResponse")
-	proto.RegisterType((*CorporationsResponse)(nil), "chremoas.esi.CorporationsResponse")
-	proto.RegisterType((*AllianceNamesResponse)(nil), "chremoas.esi.AllianceNamesResponse")
-	proto.RegisterType((*Alliance)(nil), "chremoas.esi.Alliance")
-	proto.RegisterType((*Icons)(nil), "chremoas.esi.Icons")
-	proto.RegisterType((*AllianceNames)(nil), "chremoas.esi.AllianceNames")
+	proto.RegisterType((*GetAlliancesRequest)(nil), "chremoas.esi.GetAlliancesRequest")
+	proto.RegisterType((*GetAlliancesResponse)(nil), "chremoas.esi.GetAlliancesResponse")
+	proto.RegisterType((*GetAllianceByIdRequest)(nil), "chremoas.esi.GetAllianceByIdRequest")
+	proto.RegisterType((*GetAllianceByIdResponse)(nil), "chremoas.esi.GetAllianceByIdResponse")
+	proto.RegisterType((*GetAllianceCorporationsByIdRequest)(nil), "chremoas.esi.GetAllianceCorporationsByIdRequest")
+	proto.RegisterType((*GetAllianceCorporationsByIdResponse)(nil), "chremoas.esi.GetAllianceCorporationsByIdResponse")
+	proto.RegisterType((*GetAllianceIconsByIdRequest)(nil), "chremoas.esi.GetAllianceIconsByIdRequest")
+	proto.RegisterType((*GetAllianceIconsByIdResponse)(nil), "chremoas.esi.GetAllianceIconsByIdResponse")
+	proto.RegisterType((*GetAllianceNamesByIdsRequest)(nil), "chremoas.esi.GetAllianceNamesByIdsRequest")
+	proto.RegisterType((*GetAllianceNamesByIdsResponse)(nil), "chremoas.esi.GetAllianceNamesByIdsResponse")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -282,37 +232,37 @@ var _ context.Context
 var _ client.Option
 var _ server.Option
 
-// Client API for AllianceQuery service
+// Client API for AllianceService service
 
-type AllianceQueryClient interface {
-	GetAlliances(ctx context.Context, in *EmptyRequest, opts ...client.CallOption) (*AlliancesResponse, error)
-	GetAllianceId(ctx context.Context, in *AllianceRequest, opts ...client.CallOption) (*AllianceIdResponse, error)
-	GetAllianceIdCorporations(ctx context.Context, in *AllianceRequest, opts ...client.CallOption) (*CorporationsResponse, error)
-	GetAllianceIdIcons(ctx context.Context, in *AllianceRequest, opts ...client.CallOption) (*AllianceIconResponse, error)
-	GetAllianceNames(ctx context.Context, in *AllianceNamesRequest, opts ...client.CallOption) (*AllianceNamesResponse, error)
+type AllianceServiceClient interface {
+	GetAlliances(ctx context.Context, in *GetAlliancesRequest, opts ...client.CallOption) (*GetAlliancesResponse, error)
+	GetAllianceById(ctx context.Context, in *GetAllianceByIdRequest, opts ...client.CallOption) (*GetAllianceByIdResponse, error)
+	GetAllianceCorporationsById(ctx context.Context, in *GetAllianceCorporationsByIdRequest, opts ...client.CallOption) (*GetAllianceCorporationsByIdResponse, error)
+	GetAllianceIconsById(ctx context.Context, in *GetAllianceIconsByIdRequest, opts ...client.CallOption) (*GetAllianceIconsByIdResponse, error)
+	GetAllianceNamesByIds(ctx context.Context, in *GetAllianceNamesByIdsRequest, opts ...client.CallOption) (*GetAllianceNamesByIdsResponse, error)
 }
 
-type allianceQueryClient struct {
+type allianceServiceClient struct {
 	c           client.Client
 	serviceName string
 }
 
-func NewAllianceQueryClient(serviceName string, c client.Client) AllianceQueryClient {
+func NewAllianceServiceClient(serviceName string, c client.Client) AllianceServiceClient {
 	if c == nil {
 		c = client.NewClient()
 	}
 	if len(serviceName) == 0 {
 		serviceName = "chremoas.esi"
 	}
-	return &allianceQueryClient{
+	return &allianceServiceClient{
 		c:           c,
 		serviceName: serviceName,
 	}
 }
 
-func (c *allianceQueryClient) GetAlliances(ctx context.Context, in *EmptyRequest, opts ...client.CallOption) (*AlliancesResponse, error) {
-	req := c.c.NewRequest(c.serviceName, "AllianceQuery.GetAlliances", in)
-	out := new(AlliancesResponse)
+func (c *allianceServiceClient) GetAlliances(ctx context.Context, in *GetAlliancesRequest, opts ...client.CallOption) (*GetAlliancesResponse, error) {
+	req := c.c.NewRequest(c.serviceName, "AllianceService.GetAlliances", in)
+	out := new(GetAlliancesResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -320,9 +270,9 @@ func (c *allianceQueryClient) GetAlliances(ctx context.Context, in *EmptyRequest
 	return out, nil
 }
 
-func (c *allianceQueryClient) GetAllianceId(ctx context.Context, in *AllianceRequest, opts ...client.CallOption) (*AllianceIdResponse, error) {
-	req := c.c.NewRequest(c.serviceName, "AllianceQuery.GetAllianceId", in)
-	out := new(AllianceIdResponse)
+func (c *allianceServiceClient) GetAllianceById(ctx context.Context, in *GetAllianceByIdRequest, opts ...client.CallOption) (*GetAllianceByIdResponse, error) {
+	req := c.c.NewRequest(c.serviceName, "AllianceService.GetAllianceById", in)
+	out := new(GetAllianceByIdResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -330,9 +280,9 @@ func (c *allianceQueryClient) GetAllianceId(ctx context.Context, in *AllianceReq
 	return out, nil
 }
 
-func (c *allianceQueryClient) GetAllianceIdCorporations(ctx context.Context, in *AllianceRequest, opts ...client.CallOption) (*CorporationsResponse, error) {
-	req := c.c.NewRequest(c.serviceName, "AllianceQuery.GetAllianceIdCorporations", in)
-	out := new(CorporationsResponse)
+func (c *allianceServiceClient) GetAllianceCorporationsById(ctx context.Context, in *GetAllianceCorporationsByIdRequest, opts ...client.CallOption) (*GetAllianceCorporationsByIdResponse, error) {
+	req := c.c.NewRequest(c.serviceName, "AllianceService.GetAllianceCorporationsById", in)
+	out := new(GetAllianceCorporationsByIdResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -340,9 +290,9 @@ func (c *allianceQueryClient) GetAllianceIdCorporations(ctx context.Context, in 
 	return out, nil
 }
 
-func (c *allianceQueryClient) GetAllianceIdIcons(ctx context.Context, in *AllianceRequest, opts ...client.CallOption) (*AllianceIconResponse, error) {
-	req := c.c.NewRequest(c.serviceName, "AllianceQuery.GetAllianceIdIcons", in)
-	out := new(AllianceIconResponse)
+func (c *allianceServiceClient) GetAllianceIconsById(ctx context.Context, in *GetAllianceIconsByIdRequest, opts ...client.CallOption) (*GetAllianceIconsByIdResponse, error) {
+	req := c.c.NewRequest(c.serviceName, "AllianceService.GetAllianceIconsById", in)
+	out := new(GetAllianceIconsByIdResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -350,9 +300,9 @@ func (c *allianceQueryClient) GetAllianceIdIcons(ctx context.Context, in *Allian
 	return out, nil
 }
 
-func (c *allianceQueryClient) GetAllianceNames(ctx context.Context, in *AllianceNamesRequest, opts ...client.CallOption) (*AllianceNamesResponse, error) {
-	req := c.c.NewRequest(c.serviceName, "AllianceQuery.GetAllianceNames", in)
-	out := new(AllianceNamesResponse)
+func (c *allianceServiceClient) GetAllianceNamesByIds(ctx context.Context, in *GetAllianceNamesByIdsRequest, opts ...client.CallOption) (*GetAllianceNamesByIdsResponse, error) {
+	req := c.c.NewRequest(c.serviceName, "AllianceService.GetAllianceNamesByIds", in)
+	out := new(GetAllianceNamesByIdsResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -360,77 +310,70 @@ func (c *allianceQueryClient) GetAllianceNames(ctx context.Context, in *Alliance
 	return out, nil
 }
 
-// Server API for AllianceQuery service
+// Server API for AllianceService service
 
-type AllianceQueryHandler interface {
-	GetAlliances(context.Context, *EmptyRequest, *AlliancesResponse) error
-	GetAllianceId(context.Context, *AllianceRequest, *AllianceIdResponse) error
-	GetAllianceIdCorporations(context.Context, *AllianceRequest, *CorporationsResponse) error
-	GetAllianceIdIcons(context.Context, *AllianceRequest, *AllianceIconResponse) error
-	GetAllianceNames(context.Context, *AllianceNamesRequest, *AllianceNamesResponse) error
+type AllianceServiceHandler interface {
+	GetAlliances(context.Context, *GetAlliancesRequest, *GetAlliancesResponse) error
+	GetAllianceById(context.Context, *GetAllianceByIdRequest, *GetAllianceByIdResponse) error
+	GetAllianceCorporationsById(context.Context, *GetAllianceCorporationsByIdRequest, *GetAllianceCorporationsByIdResponse) error
+	GetAllianceIconsById(context.Context, *GetAllianceIconsByIdRequest, *GetAllianceIconsByIdResponse) error
+	GetAllianceNamesByIds(context.Context, *GetAllianceNamesByIdsRequest, *GetAllianceNamesByIdsResponse) error
 }
 
-func RegisterAllianceQueryHandler(s server.Server, hdlr AllianceQueryHandler, opts ...server.HandlerOption) {
-	s.Handle(s.NewHandler(&AllianceQuery{hdlr}, opts...))
+func RegisterAllianceServiceHandler(s server.Server, hdlr AllianceServiceHandler, opts ...server.HandlerOption) {
+	s.Handle(s.NewHandler(&AllianceService{hdlr}, opts...))
 }
 
-type AllianceQuery struct {
-	AllianceQueryHandler
+type AllianceService struct {
+	AllianceServiceHandler
 }
 
-func (h *AllianceQuery) GetAlliances(ctx context.Context, in *EmptyRequest, out *AlliancesResponse) error {
-	return h.AllianceQueryHandler.GetAlliances(ctx, in, out)
+func (h *AllianceService) GetAlliances(ctx context.Context, in *GetAlliancesRequest, out *GetAlliancesResponse) error {
+	return h.AllianceServiceHandler.GetAlliances(ctx, in, out)
 }
 
-func (h *AllianceQuery) GetAllianceId(ctx context.Context, in *AllianceRequest, out *AllianceIdResponse) error {
-	return h.AllianceQueryHandler.GetAllianceId(ctx, in, out)
+func (h *AllianceService) GetAllianceById(ctx context.Context, in *GetAllianceByIdRequest, out *GetAllianceByIdResponse) error {
+	return h.AllianceServiceHandler.GetAllianceById(ctx, in, out)
 }
 
-func (h *AllianceQuery) GetAllianceIdCorporations(ctx context.Context, in *AllianceRequest, out *CorporationsResponse) error {
-	return h.AllianceQueryHandler.GetAllianceIdCorporations(ctx, in, out)
+func (h *AllianceService) GetAllianceCorporationsById(ctx context.Context, in *GetAllianceCorporationsByIdRequest, out *GetAllianceCorporationsByIdResponse) error {
+	return h.AllianceServiceHandler.GetAllianceCorporationsById(ctx, in, out)
 }
 
-func (h *AllianceQuery) GetAllianceIdIcons(ctx context.Context, in *AllianceRequest, out *AllianceIconResponse) error {
-	return h.AllianceQueryHandler.GetAllianceIdIcons(ctx, in, out)
+func (h *AllianceService) GetAllianceIconsById(ctx context.Context, in *GetAllianceIconsByIdRequest, out *GetAllianceIconsByIdResponse) error {
+	return h.AllianceServiceHandler.GetAllianceIconsById(ctx, in, out)
 }
 
-func (h *AllianceQuery) GetAllianceNames(ctx context.Context, in *AllianceNamesRequest, out *AllianceNamesResponse) error {
-	return h.AllianceQueryHandler.GetAllianceNames(ctx, in, out)
+func (h *AllianceService) GetAllianceNamesByIds(ctx context.Context, in *GetAllianceNamesByIdsRequest, out *GetAllianceNamesByIdsResponse) error {
+	return h.AllianceServiceHandler.GetAllianceNamesByIds(ctx, in, out)
 }
 
 func init() { proto.RegisterFile("alliance.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 487 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x54, 0xc1, 0x6e, 0xd3, 0x40,
-	0x10, 0x8d, 0x93, 0xa6, 0xa2, 0x93, 0xb4, 0x85, 0xa5, 0x54, 0x26, 0x08, 0xb0, 0x86, 0x4b, 0xb8,
-	0x44, 0x22, 0x08, 0x09, 0x71, 0x8b, 0x20, 0x85, 0x1c, 0x80, 0xd6, 0xed, 0x05, 0x24, 0x24, 0x8c,
-	0x3d, 0xa2, 0x16, 0xb5, 0x37, 0x78, 0xd7, 0xa2, 0xfe, 0x07, 0xbe, 0x8d, 0x6f, 0x42, 0x6b, 0xaf,
-	0xed, 0xdd, 0xc8, 0x34, 0xe2, 0x96, 0x79, 0x33, 0xef, 0x65, 0x66, 0xdf, 0x4b, 0xe0, 0x20, 0xb8,
-	0xba, 0x8a, 0x83, 0x34, 0xa4, 0xd9, 0x3a, 0xe3, 0x92, 0xb3, 0x71, 0x78, 0x99, 0x51, 0xc2, 0x03,
-	0x31, 0x23, 0x11, 0x4f, 0xc6, 0x21, 0x4f, 0x12, 0x9e, 0x56, 0x3d, 0x7c, 0x06, 0x87, 0x0b, 0x3d,
-	0xed, 0xd3, 0xcf, 0x9c, 0x84, 0x64, 0x8f, 0x00, 0x6a, 0x68, 0x15, 0xb9, 0x8e, 0xe7, 0x4c, 0x87,
-	0xbe, 0x81, 0xe0, 0x4b, 0x38, 0xaa, 0xab, 0x0f, 0x41, 0x42, 0xa2, 0xe6, 0x79, 0x30, 0x6a, 0xa7,
-	0x84, 0xeb, 0x78, 0x83, 0xe9, 0xc0, 0x37, 0x21, 0x7c, 0x01, 0x77, 0xea, 0x52, 0xf8, 0x24, 0xd6,
-	0x3c, 0x15, 0xd4, 0x45, 0x1b, 0xda, 0xb4, 0x77, 0xc0, 0xda, 0xb2, 0xe1, 0xcd, 0xe1, 0x56, 0x8d,
-	0x96, 0x4b, 0x8e, 0xe6, 0xc7, 0x33, 0xf3, 0xd0, 0x59, 0x73, 0x57, 0x33, 0x87, 0x8b, 0x76, 0xf5,
-	0x55, 0xc8, 0xd3, 0x46, 0xeb, 0x29, 0x0c, 0x55, 0x2d, 0xb4, 0xd0, 0x5d, 0x5b, 0xa8, 0x6c, 0xf9,
-	0xd5, 0x04, 0xbe, 0x82, 0xa3, 0xd7, 0x3c, 0x5b, 0xf3, 0x2c, 0x90, 0xb1, 0x82, 0x6b, 0x09, 0x84,
-	0xb1, 0x89, 0xeb, 0x3b, 0x2c, 0x0c, 0x3f, 0xc3, 0xbd, 0x8d, 0x97, 0xd3, 0xe4, 0x05, 0xec, 0x5b,
-	0x8d, 0x92, 0x3d, 0x9a, 0x3f, 0xe8, 0x3e, 0xa8, 0xe2, 0xda, 0x0c, 0xfc, 0xed, 0xb4, 0xef, 0xc1,
-	0x0e, 0xa0, 0xdf, 0x58, 0xd7, 0x5f, 0x45, 0x8c, 0xc1, 0x8e, 0x9a, 0x72, 0xfb, 0x9e, 0x33, 0xdd,
-	0xf3, 0xcb, 0xcf, 0xec, 0x18, 0x76, 0x2f, 0xe2, 0xf0, 0x07, 0x65, 0xee, 0xa0, 0x44, 0x75, 0xa5,
-	0x0e, 0x59, 0x5e, 0x53, 0x98, 0x4b, 0x9e, 0xa9, 0xe5, 0xdd, 0x9d, 0x52, 0xc5, 0xc2, 0x94, 0x67,
-	0x6f, 0x02, 0x49, 0x27, 0x3c, 0x4f, 0x23, 0x8a, 0xdc, 0xa1, 0xe7, 0x28, 0xab, 0x0d, 0x08, 0xcf,
-	0xf4, 0x8b, 0xaa, 0x34, 0x9d, 0x9e, 0xc7, 0xd7, 0xb2, 0x38, 0xe1, 0x79, 0x56, 0xae, 0xb4, 0xe7,
-	0x1b, 0x08, 0x9b, 0xc2, 0xe1, 0xe9, 0xc7, 0x94, 0x2e, 0x7e, 0x51, 0x2a, 0x8b, 0x65, 0xfc, 0xfd,
-	0x52, 0xea, 0x2d, 0x37, 0x61, 0x3c, 0xdf, 0x78, 0xa4, 0x6d, 0x41, 0x55, 0x97, 0x98, 0x04, 0xad,
-	0x6b, 0x61, 0xf3, 0x3f, 0x83, 0x56, 0xf5, 0x2c, 0xa7, 0xac, 0x60, 0xef, 0x61, 0xfc, 0x96, 0x64,
-	0x93, 0x53, 0x36, 0xb1, 0x4d, 0x58, 0x26, 0x6b, 0x59, 0xe8, 0xc8, 0x4f, 0x1e, 0x77, 0x1b, 0xd4,
-	0x18, 0x8b, 0x3d, 0xe6, 0xc3, 0xbe, 0x21, 0xb7, 0x8a, 0xd8, 0xc3, 0x7f, 0xa4, 0x54, 0x4b, 0x7a,
-	0xdd, 0xed, 0x36, 0xf8, 0xd8, 0x63, 0x5f, 0xe1, 0xbe, 0xa5, 0x69, 0x86, 0x6c, 0x9b, 0x3e, 0xda,
-	0xed, 0xae, 0x2c, 0x63, 0x8f, 0x7d, 0x02, 0x66, 0x7d, 0x43, 0xe5, 0xe5, 0xff, 0x49, 0x77, 0xfd,
-	0xd2, 0xb0, 0xc7, 0xbe, 0xc0, 0x6d, 0x43, 0xba, 0x72, 0x12, 0x6f, 0x0a, 0xba, 0x56, 0x7f, 0x72,
-	0xe3, 0x4c, 0x2d, 0xff, 0x6d, 0xb7, 0xfc, 0x5f, 0x7b, 0xfe, 0x37, 0x00, 0x00, 0xff, 0xff, 0xe4,
-	0x77, 0x7c, 0x32, 0x05, 0x05, 0x00, 0x00,
+	// 377 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x54, 0x4d, 0x4f, 0xbb, 0x30,
+	0x18, 0xff, 0xb3, 0xfd, 0x31, 0xe6, 0xd9, 0xb2, 0x99, 0xce, 0xcd, 0x85, 0x69, 0x32, 0xab, 0x26,
+	0x4c, 0x23, 0xd9, 0xd0, 0xc4, 0xb3, 0x7a, 0x30, 0x1c, 0xf4, 0x50, 0x0f, 0x5e, 0x45, 0x68, 0x22,
+	0xc9, 0xa0, 0x93, 0xa2, 0x89, 0x77, 0x3f, 0x94, 0x1f, 0xcf, 0x58, 0x5e, 0x52, 0x36, 0xca, 0xe6,
+	0x8d, 0x3c, 0xcf, 0xef, 0xad, 0xf4, 0x07, 0xd0, 0x71, 0xe7, 0xf3, 0xc0, 0x8d, 0x3c, 0x6a, 0x2d,
+	0x62, 0x96, 0x30, 0xd4, 0xf6, 0x5e, 0x63, 0x1a, 0x32, 0x97, 0x5b, 0x94, 0x07, 0x46, 0xdb, 0x63,
+	0x61, 0xc8, 0xa2, 0x74, 0x87, 0xfb, 0xd0, 0xbb, 0xa3, 0xc9, 0x75, 0x46, 0xe0, 0x84, 0xbe, 0xbd,
+	0x53, 0x9e, 0x60, 0x13, 0x76, 0xcb, 0x63, 0xbe, 0x60, 0x11, 0xa7, 0x68, 0x07, 0x9a, 0x8e, 0xcf,
+	0x87, 0xda, 0xb8, 0x69, 0xea, 0xe4, 0xf7, 0x11, 0x9b, 0x30, 0x90, 0x90, 0x37, 0x9f, 0x8e, 0x9f,
+	0x69, 0xa0, 0x0e, 0x34, 0x1c, 0x7f, 0xa8, 0x8d, 0x35, 0x53, 0x27, 0x0d, 0xc7, 0xc7, 0xf7, 0xb0,
+	0xb7, 0x82, 0xcc, 0x64, 0x6d, 0xd8, 0xce, 0xe7, 0x82, 0xd0, 0xb2, 0x07, 0x96, 0x1c, 0xda, 0xca,
+	0xb7, 0xa4, 0xc0, 0xe1, 0x4b, 0xc0, 0x92, 0xdc, 0x2d, 0x8b, 0x17, 0x2c, 0x76, 0x93, 0x80, 0x45,
+	0xbc, 0x2e, 0xc4, 0x15, 0x1c, 0xd5, 0xb2, 0x94, 0xe7, 0x3c, 0x87, 0x91, 0x44, 0x74, 0xbc, 0x35,
+	0x3e, 0x0e, 0xec, 0x57, 0xc3, 0x33, 0x83, 0x09, 0xe8, 0x62, 0x98, 0x1d, 0xb7, 0x57, 0x3e, 0xae,
+	0x58, 0x91, 0x14, 0x81, 0xa7, 0x25, 0xa9, 0x07, 0x37, 0xa4, 0x42, 0x2a, 0xbf, 0x2b, 0x39, 0x6b,
+	0x33, 0xcd, 0x4a, 0xe0, 0x40, 0xc1, 0xc8, 0xdc, 0x67, 0xa0, 0x8b, 0xa9, 0x20, 0xb5, 0xec, 0x51,
+	0xf5, 0xcb, 0x16, 0x10, 0x92, 0x22, 0xed, 0xef, 0xff, 0xd0, 0xcd, 0x17, 0x8f, 0x34, 0xfe, 0x08,
+	0x3c, 0x8a, 0x9e, 0xa0, 0x2d, 0xb7, 0x04, 0x1d, 0x96, 0x75, 0x2a, 0x8a, 0x65, 0xe0, 0x3a, 0x48,
+	0x9a, 0x0e, 0xff, 0x43, 0xcf, 0xd0, 0x5d, 0xaa, 0x0a, 0x3a, 0x56, 0x12, 0xa5, 0x6b, 0x30, 0x4e,
+	0xd6, 0xa0, 0x0a, 0x87, 0x2f, 0xad, 0x74, 0x9f, 0xcb, 0x45, 0x40, 0x53, 0xa5, 0x90, 0xa2, 0x69,
+	0xc6, 0xec, 0x0f, 0x8c, 0x22, 0x06, 0x2b, 0x7d, 0x67, 0x45, 0x4d, 0xd0, 0x44, 0x29, 0xb6, 0xdc,
+	0x3c, 0xe3, 0x74, 0x13, 0x68, 0x61, 0x18, 0x43, 0xbf, 0xb2, 0x1a, 0x48, 0x2d, 0xb3, 0xd2, 0x38,
+	0xe3, 0x6c, 0x23, 0x6c, 0xee, 0xf9, 0xb2, 0x25, 0x7e, 0x35, 0x17, 0x3f, 0x01, 0x00, 0x00, 0xff,
+	0xff, 0x92, 0xb8, 0x39, 0x77, 0x98, 0x04, 0x00, 0x00,
 }

@@ -2,10 +2,12 @@ syntax = "proto3";
 
 package chremoas.esi;
 
-service SearchQuery {
-    rpc GetSearch (SearchRequest) returns (SearchResponse) {
+service SearchService {
+    rpc Search (SearchRequest) returns (SearchResponse) {
     };
 }
+
+// Search
 
 message SearchRequest {
     string SearchString = 1;

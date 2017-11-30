@@ -4,61 +4,62 @@ package chremoas.esi;
 
 import "common.proto";
 
-service AllianceQuery {
-    rpc GetAlliances (EmptyRequest) returns (AlliancesResponse) {
+service AllianceService {
+    rpc GetAlliances (GetAlliancesRequest) returns (GetAlliancesResponse) {
     };
-    rpc GetAllianceId (AllianceRequest) returns (AllianceIdResponse) {
+    rpc GetAllianceById (GetAllianceByIdRequest) returns (GetAllianceByIdResponse) {
     };
-    rpc GetAllianceIdCorporations (AllianceRequest) returns (CorporationsResponse) {
+    rpc GetAllianceCorporationsById (GetAllianceCorporationsByIdRequest) returns (GetAllianceCorporationsByIdResponse) {
     };
-    rpc GetAllianceIdIcons (AllianceRequest) returns (AllianceIconResponse) {
+    rpc GetAllianceIconsById (GetAllianceIconsByIdRequest) returns (GetAllianceIconsByIdResponse) {
     };
-    rpc GetAllianceNames (AllianceNamesRequest) returns (AllianceNamesResponse) {
+    rpc GetAllianceNamesByIds (GetAllianceNamesByIdsRequest) returns (GetAllianceNamesByIdsResponse) {
     };
 }
 
-message AllianceRequest {
-    int32 AllianceId = 1;
+// GetAlliances
+
+message GetAlliancesRequest {}
+
+message GetAlliancesResponse {
+    repeated int32 Ids = 1;
 }
 
-message AllianceNamesRequest {
-    repeated int64 AllianceIds = 1;
+// GetAllianceById
+
+message GetAllianceByIdRequest {
+    int32 Id = 1;
 }
 
-message AlliancesResponse {
-    repeated int32 AllianceIds = 1;
-}
-
-message AllianceIdResponse {
+message GetAllianceByIdResponse {
     Alliance Alliance = 1;
 }
 
-message AllianceIconResponse {
+// GetAllianceCorporationsById
+message GetAllianceCorporationsByIdRequest {
+    int32 Id = 1;
+}
+
+message GetAllianceCorporationsByIdResponse {
+    repeated int32 Ids = 1;
+}
+
+// GetAllianceIconsById
+
+message GetAllianceIconsByIdRequest {
+    int32 Id = 1;
+}
+
+message GetAllianceIconsByIdResponse {
     Icons Icons = 1;
 }
 
-message CorporationsResponse {
-    repeated int32 Corporations = 1;
+// GetAllianceNamesByIds
+
+message GetAllianceNamesByIdsRequest {
+    repeated int64 Ids = 1;
 }
 
-message AllianceNamesResponse {
-    repeated AllianceNames AllianceNames = 1;
-}
-
-message Alliance {
-    int32 Id = 1;
-    string Name = 2;
-    string Ticker = 3;
-    int32 ExecutorCorp = 4;
-    int64 DateFounded = 5;
-}
-
-message Icons {
-    string PSixtyFour = 1;
-    string POneTwentyEight = 2;
-}
-
-message AllianceNames {
-    int32 AllianceId = 1;
-    string AllianceName = 2;
+message GetAllianceNamesByIdsResponse {
+    repeated AllianceNames Names = 1;
 }

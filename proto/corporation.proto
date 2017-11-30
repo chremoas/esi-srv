@@ -2,30 +2,20 @@ syntax = "proto3";
 
 package chremoas.esi;
 
-service CorporationQuery {
-    rpc GetCorporation (CorporationRequest) returns (CorporationResponse) {
+import "common.proto";
+
+service CorporationService {
+    rpc GetCorporationById (GetCorporationByIdRequest) returns (GetCorporationByIdResponse) {
     };
 }
 
-message CorporationRequest {
-    int32 EntityId = 1;
-}
+// GetCorporationById
 
-message CorporationResponse {
-    Corporation Result = 1;
-}
-
-message Corporation {
+message GetCorporationByIdRequest {
     int32 Id = 1;
-    string Name = 2;
-    string Ticker = 3;
-    int32 MemberCount = 4;
-    int32 CeoId = 5;
-    int32 AllianceId = 6;
-    string Description = 7;
-    float TaxRate = 8;
-    int64 CreationDate = 9;
-    int32 CreatorId = 10;
-    string Url = 11;
-    string Faction = 12;
 }
+
+message GetCorporationByIdResponse {
+    Corporation Corporation = 1;
+}
+
