@@ -20,15 +20,17 @@ func NewSearchQueryHandler() chremoas_esi.SearchServiceHandler {
 }
 
 func (eqh *searchServiceHandler) Search(ctx context.Context, request *chremoas_esi.SearchRequest, response *chremoas_esi.SearchResponse) error {
+	esiOptionals, _ := ctx.Value("esiOptionals").(map[string]interface{})
+	fmt.Printf("esiOptionals: %+v\n", esiOptionals)
 	// I dislike having to do this as two calls but there is a limit of 10 categories per call
 	var categories1 = []string{"agent", "alliance", "character", "constellation", "corporation"}
-	result1, _, err1 := eqh.ESIClient.ESI.SearchApi.GetSearch(context.Background(), categories1, request.SearchString, ctx.Value("esiOptionals"))
+	result1, _, err1 := eqh.ESIClient.ESI.SearchApi.GetSearch(context.Background(), categories1, request.SearchString, esiOptionals)
 	if err1 != nil {
 		return fmt.Errorf("Had some kind of error searching '%s'\n", err1)
 	}
 
 	var categories2 = []string{"faction", "inventorytype", "region", "solarsystem", "station", "wormhole"}
-	result2, _, err2 := eqh.ESIClient.ESI.SearchApi.GetSearch(context.Background(), categories2, request.SearchString, ctx.Value("esiOptionals"))
+	result2, _, err2 := eqh.ESIClient.ESI.SearchApi.GetSearch(context.Background(), categories2, request.SearchString, esiOptionals)
 	if err2 != nil {
 		return fmt.Errorf("Had some kind of error searching '%s'\n", err2)
 	}
