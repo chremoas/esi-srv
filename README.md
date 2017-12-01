@@ -1,2 +1,2 @@
-# ESI (EVE Swagger Interface) proxy service:w
+# ESI (EVE Swagger Interface) proxy service
 
