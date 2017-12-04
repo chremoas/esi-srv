@@ -14,7 +14,7 @@ type allianceServiceHandler struct {
 	ESIClient *goesi.APIClient
 }
 
-func NewAllianceQueryHandler() chremoas_esi.AllianceServiceHandler {
+func NewAllianceServiceHandler() chremoas_esi.AllianceServiceHandler {
 	httpClient := httpcache.NewMemoryCacheTransport().Client()
 	return &allianceServiceHandler{ESIClient: goesi.NewAPIClient(httpClient, "chremoas-esi-srv Ramdar Chinken on TweetFleet Slack https://github.com/chremoas/esi-srv")}
 }

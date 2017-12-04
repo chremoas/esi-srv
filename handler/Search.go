@@ -14,7 +14,7 @@ type searchServiceHandler struct {
 	ESIClient *goesi.APIClient
 }
 
-func NewSearchQueryHandler() chremoas_esi.SearchServiceHandler {
+func NewSearchServiceHandler() chremoas_esi.SearchServiceHandler {
 	httpClient := httpcache.NewMemoryCacheTransport().Client()
 	return &searchServiceHandler{ESIClient: goesi.NewAPIClient(httpClient, "chremoas-esi-srv Ramdar Chinken on TweetFleet Slack https://github.com/chremoas/esi-srv")}
 }

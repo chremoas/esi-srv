@@ -14,7 +14,7 @@ type characterServiceHandler struct {
 	ESIClient *goesi.APIClient
 }
 
-func NewCharacterQueryHandler() chremoas_esi.CharacterServiceHandler {
+func NewCharacterServiceHandler() chremoas_esi.CharacterServiceHandler {
 	httpClient := httpcache.NewMemoryCacheTransport().Client()
 	return &characterServiceHandler{ESIClient: goesi.NewAPIClient(httpClient, "chremoas-esi-srv Ramdar Chinken on TweetFleet Slack https://github.com/chremoas/esi-srv")}
 }

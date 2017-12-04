@@ -14,7 +14,7 @@ type corporationServiceHandler struct {
 	ESIClient *goesi.APIClient
 }
 
-func NewCorporationQueryHandler() chremoas_esi.CorporationServiceHandler {
+func NewCorporationServiceHandler() chremoas_esi.CorporationServiceHandler {
 	httpClient := httpcache.NewMemoryCacheTransport().Client()
 	return &corporationServiceHandler{ESIClient: goesi.NewAPIClient(httpClient, "chremoas-esi-srv Ramdar Chinken on TweetFleet Slack https://github.com/chremoas/esi-srv")}
 }
