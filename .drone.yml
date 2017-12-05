@@ -2,7 +2,7 @@ pipeline:
   build:
     image: golang:${GO_VERSION}
     commands:
-      - echo ${TEST_SECRET}
+      - echo ${test_secret}
       - export GOPATH=/drone
       - export PATH=$PATH:$GOPATH/bin
       - go get -t -v ./...
