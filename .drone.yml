@@ -17,8 +17,8 @@ pipeline:
   discord:
     image: appleboy/drone-discord
     secrets: [ discord_webhook_id, discord_webhook_token ]
-    webhook_id: ${DISCORD_WEBHOOK_ID}
-    webhook_token: ${DISCORD_WEBHOOK_TOKEN}
+    webhook_id: $DISCORD_WEBHOOK_ID
+    webhook_token: $DISCORD_WEBHOOK_TOKEN
     tts: true
     username: Drone (esi-srv)
     message: |
