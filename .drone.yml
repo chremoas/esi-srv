@@ -2,7 +2,7 @@ pipeline:
   build:
     image: golang:${GO_VERSION}
     secrets:
-      - source: test_secret
+      - source: test_secret2
         target: MONKEY
     volumes:
       - /tank/drone:/tank
