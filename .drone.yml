@@ -7,7 +7,7 @@ pipeline:
     volumes:
       - /tank/drone:/tank
     commands:
-      - echo ${MONKEY} > /tank/foo
+      - echo $MONKEY > /tank/foo
       - env
       - export GOPATH=/drone
       - export PATH=$PATH:$GOPATH/bin
