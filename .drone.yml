@@ -3,11 +3,11 @@ pipeline:
     image: golang:${GO_VERSION}
     secrets:
       - source: test_secret
-        target: TEST_SECRET
+        target: MONKEY
     volumes:
       - /tank/drone:/tank
     commands:
-      - echo ${TEST_SECRET} > /tank/foo
+      - echo ${MONKEY} > /tank/foo
       - export GOPATH=/drone
       - export PATH=$PATH:$GOPATH/bin
       - go get -t -v ./...
