@@ -15,6 +15,7 @@ pipeline:
       - export PATH=$PATH:$GOPATH/bin
       - go get -t -v ./...
       - go build
+      - go test
 
 #  discord:
 #    image: appleboy/drone-discord
