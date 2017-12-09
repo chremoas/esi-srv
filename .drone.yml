@@ -1,75 +1,33 @@
-platform: linux/arm
+matrix:
+  GO_VERSION:
+    - 1.8
+    - 1.9
 
-workspace:
-  base: /go
-  path: src/git.maurer-it.net/abaeve/
-
-clone:
-  default:
-    image: plugins/git:linux-arm
-    depth: 50
-    tags: true
+services:
+  esi:
+    image: antihax/mock-esi
 
 pipeline:
   build:
-    image: registry.maurer-it.net/golang-1.8
+    image: golang:${GO_VERSION}
     commands:
+      - export GOPATH=/drone
+      - export PATH=$PATH:$GOPATH/bin
       - go get -t -v ./...
-      - go get github.com/mattn/goveralls
-#      - goveralls -service=drone.io -ignore=discord/discord.go,main.go -repotoken=${repotoken}
-      - CGO_ENABLED=0 go build -ldflags "-X main.Version=$(git describe --abbrev=0 --tags)-${DRONE_BUILD_NUMBER}-$(git rev-parse --short HEAD)" -o esi-srv .
+      - go build
+      - go test
 
-  publish:
-    image: plugins/docker:linux-arm
-    repo: registry.maurer-it.net/
-    registry: registry.maurer-it.net
-    secrets:
-      - source: registry_user
-        target: PLUGIN_USERNAME
-      - source: registry_pass
-        target: PLUGIN_PASSWORD
-    tags: [ latest, 1.0.0 ]
-    when:
-      branch: [ tag ]
+#  discord:
+#    image: appleboy/drone-discord
+#    secrets: [ discord_webhook_id, discord_webhook_token ]
+#    webhook_id: $DISCORD_WEBHOOK_ID
+#    webhook_token: $DISCORD_WEBHOOK_TOKEN
+#    tts: true
+#    username: Drone (esi-srv)
+#    message: |
+#      {{ #success build.status }}
+#        build {{ build.number }} succeeded. Good job.
+#      {{ else }}
+#        build {{ build.number }} failed. Fix me please.
+#      {{ /success }}
 
-  publish-snapshot:
-    image: plugins/docker:linux-arm
-    repo: registry.maurer-it.net/
-    registry: registry.maurer-it.net
-    secrets:
-      - source: registry_user
-        target: PLUGIN_USERNAME
-      - source: registry_pass
-        target: PLUGIN_PASSWORD
-    tags: [ latest, 1.0.0-SNAPSHOT ]
-    when:
-      branch: [ release/* ]
-
-  deploy-test:
-    image: registry.maurer-it.net/drone-ssh
-    host: docker1.home
-    username: pi
-    secrets:
-      - source: SSH_KEY
-        target: ssh_key
-    port: 22
-    script:
-      - docker login -u ${registry_user} -p ${registry_pass} registry.maurer-it.net
-      - docker service update --with-registry-auth --image=registry.maurer-it.net/:1.0.0-SNAPSHOT template-dev
-    when:
-      branch: [ release/* ]
-
-  deploy-prod:
-    image: registry.maurer-it.net/drone-ssh
-    host: docker1.home
-    username: pi
-    secrets:
-      - source: SSH_KEY
-        target: ssh_key
-    port: 22
-    script:
-      - docker login -u ${registry_user} -p ${registry_pass} registry.maurer-it.net
-      - docker service create --name template --network chremoas --with-registry-auth registry.maurer-it.net/:1.0.0
-    when:
-      event: deployment
-      environment: production
