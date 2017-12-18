@@ -20,34 +20,39 @@ func NewSearchServiceHandler() chremoas_esi.SearchServiceHandler {
 }
 
 func (eqh *searchServiceHandler) Search(ctx context.Context, request *chremoas_esi.SearchRequest, response *chremoas_esi.SearchResponse) error {
-	esiOptionals, _ := ctx.Value("esiOptionals").(map[string]interface{})
-	fmt.Printf("esiOptionals: %+v\n", esiOptionals)
+	// This doesn't work. Will fix it sometime.
+	//var esiOptionals map[string]interface{}
+	//
+	//foo, _ := ctx.Value("esiOptionals").(map[string]interface{})
+	//if len(foo) == 0 {
+	//	esiOptionals = nil
+	//} else {
+	//	esiOptionals = foo
+	//}
 	// I dislike having to do this as two calls but there is a limit of 10 categories per call
 	var categories1 = []string{"agent", "alliance", "character", "constellation", "corporation"}
-	result1, _, err1 := eqh.ESIClient.ESI.SearchApi.GetSearch(context.Background(), categories1, request.SearchString, esiOptionals)
+	result1, _, err1 := eqh.ESIClient.ESI.SearchApi.GetSearch(context.Background(), categories1, request.SearchString, nil)
 	if err1 != nil {
 		return fmt.Errorf("Had some kind of error searching '%s'\n", err1)
 	}
 
 	var categories2 = []string{"faction", "inventorytype", "region", "solarsystem", "station", "wormhole"}
-	result2, _, err2 := eqh.ESIClient.ESI.SearchApi.GetSearch(context.Background(), categories2, request.SearchString, esiOptionals)
+	result2, _, err2 := eqh.ESIClient.ESI.SearchApi.GetSearch(context.Background(), categories2, request.SearchString, nil)
 	if err2 != nil {
 		return fmt.Errorf("Had some kind of error searching '%s'\n", err2)
 	}
 
-	response = &chremoas_esi.SearchResponse{
-		Agent:         result1.Agent,
-		Alliance:      result1.Alliance,
-		Character:     result1.Character,
-		Constellation: result1.Constellation,
-		Corporation:   result1.Corporation,
-		Faction:       result2.Faction,
-		Inventorytype: result2.Inventorytype,
-		Region:        result2.Region,
-		Solarsystem:   result2.Solarsystem,
-		Station:       result2.Station,
-		Wormhole:      result2.Wormhole,
-	}
+	response.Agent = result1.Agent
+	response.Alliance = result1.Alliance
+	response.Character = result1.Character
+	response.Constellation = result1.Constellation
+	response.Corporation = result1.Corporation
+	response.Faction = result2.Faction
+	response.Inventorytype = result2.Inventorytype
+	response.Region = result2.Region
+	response.Solarsystem = result2.Solarsystem
+	response.Station = result2.Station
+	response.Wormhole = result2.Wormhole
 
 	return nil
 }
