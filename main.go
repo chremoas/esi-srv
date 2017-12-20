@@ -8,9 +8,10 @@ import (
 )
 
 var Version = "1.0.0"
+var name = "esi"
 
 func main() {
-	service := config.NewService(Version, "esi-srv", config.NilInit)
+	service := config.NewService(Version, "srv", name, config.NilInit)
 
 	chremoas_esi.RegisterAllianceServiceHandler(service.Server(), handler.NewAllianceServiceHandler())
 	chremoas_esi.RegisterCorporationServiceHandler(service.Server(), handler.NewCorporationServiceHandler())
