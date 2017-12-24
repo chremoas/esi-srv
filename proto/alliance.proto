@@ -57,7 +57,7 @@ message GetAllianceIconsByIdResponse {
 // GetAllianceNamesByIds
 
 message GetAllianceNamesByIdsRequest {
-    repeated int64 Ids = 1;
+    repeated int32 Ids = 1;
 }
 
 message GetAllianceNamesByIdsResponse {

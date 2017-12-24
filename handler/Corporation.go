@@ -26,17 +26,17 @@ func (eqh *corporationServiceHandler) GetCorporationById(ctx context.Context, re
 	}
 
 	response.Corporation = &chremoas_esi.Corporation{
-		Name:         corporation.CorporationName,
+		Name:         corporation.Name,
 		Ticker:       corporation.Ticker,
 		MemberCount:  corporation.MemberCount,
 		CeoId:        corporation.CeoId,
 		AllianceId:   corporation.AllianceId,
-		Description:  corporation.CorporationDescription,
+		Description:  corporation.Description,
 		TaxRate:      corporation.TaxRate,
-		CreationDate: corporation.CreationDate.Unix(),
+		CreationDate: corporation.DateFounded.Unix(),
 		CreatorId:    corporation.CreatorId,
 		Url:          corporation.Url,
-		Faction:      corporation.Faction,
+		FactionId:      corporation.FactionId,
 	}
 
 	return nil

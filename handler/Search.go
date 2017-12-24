@@ -48,11 +48,11 @@ func (eqh *searchServiceHandler) Search(ctx context.Context, request *chremoas_e
 	response.Constellation = result1.Constellation
 	response.Corporation = result1.Corporation
 	response.Faction = result2.Faction
-	response.Inventorytype = result2.Inventorytype
+	response.Inventorytype = result2.InventoryType
 	response.Region = result2.Region
-	response.Solarsystem = result2.Solarsystem
+	response.Solarsystem = result2.SolarSystem
 	response.Station = result2.Station
-	response.Wormhole = result2.Wormhole
+	//response.Wormhole = result2.Wormhole
 
 	return nil
 }

@@ -37,9 +37,9 @@ func (eqh *allianceServiceHandler) GetAllianceById(ctx context.Context, request 
 	}
 
 	response.Alliance = &chremoas_esi.Alliance{
-		Name:         alliance.AllianceName,
+		Name:         alliance.Name,
 		Ticker:       alliance.Ticker,
-		ExecutorCorp: alliance.ExecutorCorp,
+		ExecutorCorp: alliance.ExecutorCorporationId,
 		DateFounded:  alliance.DateFounded.Unix(),
 	}
 

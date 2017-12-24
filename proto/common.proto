@@ -51,5 +51,5 @@ message Corporation {
     int64 CreationDate = 8;
     int32 CreatorId = 9;
     string Url = 10;
-    string Faction = 11;
+    int32 FactionId = 11;
 }
