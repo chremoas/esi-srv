@@ -4,7 +4,7 @@
 package esi_mocks
 
 import (
-	context "context"
+	context "golang.org/x/net/context"
 	proto "github.com/chremoas/esi-srv/proto"
 	client "github.com/micro/go-micro/client"
 	pegomock "github.com/petergtz/pegomock"
