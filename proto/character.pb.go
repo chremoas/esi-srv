@@ -7,12 +7,6 @@ import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 
-import (
-	client "github.com/micro/go-micro/client"
-	server "github.com/micro/go-micro/server"
-	context "golang.org/x/net/context"
-)
-
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
@@ -54,63 +48,6 @@ func (m *GetCharacterByIdResponse) GetCharacter() *Character {
 func init() {
 	proto.RegisterType((*GetCharacterByIdRequest)(nil), "chremoas.esi.GetCharacterByIdRequest")
 	proto.RegisterType((*GetCharacterByIdResponse)(nil), "chremoas.esi.GetCharacterByIdResponse")
-}
-
-// Reference imports to suppress errors if they are not otherwise used.
-var _ context.Context
-var _ client.Option
-var _ server.Option
-
-// Client API for CharacterService service
-
-type CharacterServiceClient interface {
-	GetCharacterById(ctx context.Context, in *GetCharacterByIdRequest, opts ...client.CallOption) (*GetCharacterByIdResponse, error)
-}
-
-type characterServiceClient struct {
-	c           client.Client
-	serviceName string
-}
-
-func NewCharacterServiceClient(serviceName string, c client.Client) CharacterServiceClient {
-	if c == nil {
-		c = client.NewClient()
-	}
-	if len(serviceName) == 0 {
-		serviceName = "chremoas.esi"
-	}
-	return &characterServiceClient{
-		c:           c,
-		serviceName: serviceName,
-	}
-}
-
-func (c *characterServiceClient) GetCharacterById(ctx context.Context, in *GetCharacterByIdRequest, opts ...client.CallOption) (*GetCharacterByIdResponse, error) {
-	req := c.c.NewRequest(c.serviceName, "CharacterService.GetCharacterById", in)
-	out := new(GetCharacterByIdResponse)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// Server API for CharacterService service
-
-type CharacterServiceHandler interface {
-	GetCharacterById(context.Context, *GetCharacterByIdRequest, *GetCharacterByIdResponse) error
-}
-
-func RegisterCharacterServiceHandler(s server.Server, hdlr CharacterServiceHandler, opts ...server.HandlerOption) {
-	s.Handle(s.NewHandler(&CharacterService{hdlr}, opts...))
-}
-
-type CharacterService struct {
-	CharacterServiceHandler
-}
-
-func (h *CharacterService) GetCharacterById(ctx context.Context, in *GetCharacterByIdRequest, out *GetCharacterByIdResponse) error {
-	return h.CharacterServiceHandler.GetCharacterById(ctx, in, out)
 }
 
 func init() { proto.RegisterFile("character.proto", fileDescriptor1) }

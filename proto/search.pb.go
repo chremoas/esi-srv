@@ -7,12 +7,6 @@ import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 
-import (
-	client "github.com/micro/go-micro/client"
-	server "github.com/micro/go-micro/server"
-	context "golang.org/x/net/context"
-)
-
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
@@ -133,63 +127,6 @@ func (m *SearchResponse) GetWormhole() []int32 {
 func init() {
 	proto.RegisterType((*SearchRequest)(nil), "chremoas.esi.SearchRequest")
 	proto.RegisterType((*SearchResponse)(nil), "chremoas.esi.SearchResponse")
-}
-
-// Reference imports to suppress errors if they are not otherwise used.
-var _ context.Context
-var _ client.Option
-var _ server.Option
-
-// Client API for SearchService service
-
-type SearchServiceClient interface {
-	Search(ctx context.Context, in *SearchRequest, opts ...client.CallOption) (*SearchResponse, error)
-}
-
-type searchServiceClient struct {
-	c           client.Client
-	serviceName string
-}
-
-func NewSearchServiceClient(serviceName string, c client.Client) SearchServiceClient {
-	if c == nil {
-		c = client.NewClient()
-	}
-	if len(serviceName) == 0 {
-		serviceName = "chremoas.esi"
-	}
-	return &searchServiceClient{
-		c:           c,
-		serviceName: serviceName,
-	}
-}
-
-func (c *searchServiceClient) Search(ctx context.Context, in *SearchRequest, opts ...client.CallOption) (*SearchResponse, error) {
-	req := c.c.NewRequest(c.serviceName, "SearchService.Search", in)
-	out := new(SearchResponse)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// Server API for SearchService service
-
-type SearchServiceHandler interface {
-	Search(context.Context, *SearchRequest, *SearchResponse) error
-}
-
-func RegisterSearchServiceHandler(s server.Server, hdlr SearchServiceHandler, opts ...server.HandlerOption) {
-	s.Handle(s.NewHandler(&SearchService{hdlr}, opts...))
-}
-
-type SearchService struct {
-	SearchServiceHandler
-}
-
-func (h *SearchService) Search(ctx context.Context, in *SearchRequest, out *SearchResponse) error {
-	return h.SearchServiceHandler.Search(ctx, in, out)
 }
 
 func init() { proto.RegisterFile("search.proto", fileDescriptor4) }
