@@ -7,7 +7,7 @@ import (
 	"github.com/chremoas/esi-srv/handler"
 )
 
-var Version = "1.0.0"
+var Version = "SET ME YOU KNOB"
 var name = "esi"
 
 func main() {
