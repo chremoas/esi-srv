@@ -72,13 +72,15 @@ func (eqh *allianceServiceHandler) GetAllianceIconsById(ctx context.Context, req
 }
 
 func (eqh *allianceServiceHandler) GetAllianceNamesByIds(ctx context.Context, request *chremoas_esi.GetAllianceNamesByIdsRequest, response *chremoas_esi.GetAllianceNamesByIdsResponse) error {
-	alliance, _, err := eqh.ESIClient.ESI.AllianceApi.GetAlliancesNames(context.Background(), request.Ids, nil)
+	alliance, _, err := eqh.ESIClient.ESI.UniverseApi.PostUniverseNames(context.Background(), request.Ids, nil)
 	if err != nil {
 		return fmt.Errorf("Had some kind of error getting the alliance '%s'\n", err)
 	}
 
 	for _, v := range alliance {
-		response.Names = append(response.Names, &chremoas_esi.AllianceNames{AllianceId: v.AllianceId, AllianceName: v.AllianceName})
+		if v.Category == "alliance" {
+			response.Names = append(response.Names, &chremoas_esi.AllianceNames{AllianceId: v.Id, AllianceName: v.Name})
+		}
 	}
 
 	return nil
