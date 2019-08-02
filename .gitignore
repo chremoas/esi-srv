@@ -4,3 +4,4 @@
 # Architecture specific extensions/prefixes
 
 vendor/
+/esi-srv-linux-amd64
