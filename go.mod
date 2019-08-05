@@ -4,7 +4,7 @@ go 1.12
 
 require (
 	github.com/antihax/goesi v0.0.0-20190723215635-487b927dc566
-	github.com/chremoas/services-common v1.2.0
+	github.com/chremoas/services-common v1.2.1
 	github.com/golang/mock v1.3.1
 	github.com/golang/protobuf v1.3.2
 	github.com/gregjones/httpcache v0.0.0-20190611155906-901d90724c79
