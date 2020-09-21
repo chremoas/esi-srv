@@ -16,5 +16,4 @@ require (
 )
 
 replace github.com/chremoas/esi-srv => ../esi-srv
-
 replace github.com/hashicorp/consul => github.com/hashicorp/consul v1.5.1
